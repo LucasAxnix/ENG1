@@ -1,4 +1,10 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.awt.*;
+
 
 public class GameStateManager{
 
@@ -10,21 +16,32 @@ public class GameStateManager{
     public static final int ENDRACESTATE = 2;
     public static final int PODIUMSTATE = 3;
 
-    public GameStateCtrl(){
+    public GameStateManager(){
         gameStateList = new ArrayList<GameState>();
         currentState = 0;
+        //gameStateList.add(new game)
     }
 
     public void setState(int state){
         currentState = state;
-        gameStateList.get(currentState).init();
     }
 
     public void update(){
         gameStateList.get(currentState).update();
     }
 
-    public void draw(){
-        gameStateList.get(currentState).draw();
+    public void draw(Graphics g){
+        gameStateList.get(currentState).draw(g);
     }
+
+    /*public static void main(String[] args){
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File("TMBoat.png"));
+        } catch (IOException e) {
+        }
+        Graphics g = img.getGraphics();
+        g.drawImage(img,0,0,null);
+    }*/
 }
+

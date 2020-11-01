@@ -1,13 +1,18 @@
 import java.awt.*;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class Game extends JPanel implements Runnable {
     private static final double TICKRATE = 60;
-    private static final int windowWidth = 640;
-    private static final int windowHeight = 480;
+    private static final int windowWidth = 1080;
+    private static final int windowHeight = 720;
     private boolean isGameRunning = false;
-    
+    private GameStateManager gsm;
+    public JFrame window;
+
     public static Game instance;
 
     public static void main(String[] args) {
@@ -19,11 +24,31 @@ public class Game extends JPanel implements Runnable {
     public void run() {
         instance.isGameRunning = true;
         setupWindow();
+        initGameStates();
         instance.update();
     }
 
+    private void initGameStates(){
+        gsm = new GameStateManager();
+
+        String[] menuStateImages = {"MenuStateBackground.png", "MenuStateStartGame.png", "MenuStateStartGameArmed.png"};
+        gsm.loadState(0, menuStateImages);
+
+        String[] selectBoatStateImages = {"SelectBoatStateBackground.png", "Back.png"};
+        gsm.loadState(1, selectBoatStateImages);
+
+        //String[] raceStateImages = {};
+        //gsm.loadState(2, raceStateImages);
+
+        //String[] EndRaceStateImages = {};
+        //gsm.loadState(3, raceStateImages);
+
+        //String[] PodiumStateImages = {};
+        //gsm.loadState(4, raceStateImages);
+    }
+
     private void setupWindow() {
-        JFrame window = new JFrame("Game name");
+        window = new JFrame("Game name");
 
         window.setPreferredSize(new Dimension(windowWidth, windowHeight));
         window.getContentPane().add(instance);
@@ -35,8 +60,7 @@ public class Game extends JPanel implements Runnable {
 
     @Override
     public void paintComponent(Graphics g) {
-        g.setColor(new Color(66, 134, 244));
-        g.fillRect(0, 0, windowWidth, windowHeight);
+        gsm.draw(g);
     }
 
     public void update() {
@@ -66,10 +90,10 @@ public class Game extends JPanel implements Runnable {
                 update = 0;
                 frames = 0;
             }
+            gsm.update();
         }
     }
 
     private void tick() {
-
     }
 }

@@ -13,5 +13,3 @@ public abstract class GameEntity {
 
     public void update(){}
 }
-//g.setColor(new Color(66,134,244));
-// g.drawRect(x,y,width,height);

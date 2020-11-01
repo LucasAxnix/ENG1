@@ -1,7 +1,3 @@
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.*;
 
@@ -12,18 +8,26 @@ public class GameStateManager{
     public int currentState;
 
     public static final int MENUSTATE = 0;
-    public static final int RACESTATE = 1;
-    public static final int ENDRACESTATE = 2;
-    public static final int PODIUMSTATE = 3;
+    public static final int SELECTBOATSTATE = 1;
+    public static final int RACESTATE = 2;
+    public static final int ENDRACESTATE = 3;
+    public static final int PODIUMSTATE = 4;
 
     public GameStateManager(){
         gameStateList = new ArrayList<GameState>();
         currentState = 0;
         //gameStateList.add(new game)
+        gameStateList.add(new MenuState(this));
+        gameStateList.add(new BoatSelectionState(this));
+
+        gameStateList.get(currentState).showButtons();
     }
 
     public void setState(int state){
+        gameStateList.get(currentState).hideButtons();
         currentState = state;
+        gameStateList.get(currentState).initButtons();
+        gameStateList.get(currentState).showButtons();
     }
 
     public void update(){
@@ -34,14 +38,8 @@ public class GameStateManager{
         gameStateList.get(currentState).draw(g);
     }
 
-    /*public static void main(String[] args){
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File("TMBoat.png"));
-        } catch (IOException e) {
-        }
-        Graphics g = img.getGraphics();
-        g.drawImage(img,0,0,null);
-    }*/
+    public void loadState(int stateNumber, String[] images){
+        gameStateList.get(stateNumber).loadImages(images);
+    }
 }
 

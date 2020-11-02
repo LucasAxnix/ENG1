@@ -21,4 +21,4 @@ public class Boat{
 		this.Maneuverability = bt.Maneuverability;
 		return bt;
 	}
-	
+	//Initiate by calling "Boat boatname = new Boat(speed, acc, dur, man)"

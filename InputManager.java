@@ -7,7 +7,7 @@ var InputManager = inherits(function() { }, {
 		'W' : 82
 		'A' : 65
 		'S' : 82
-		'D' :68
+		'D' : 68
 	},
 	
 	'_keysDown': {},

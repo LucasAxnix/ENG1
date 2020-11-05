@@ -29,3 +29,4 @@ var InputManager = inherits(function() { }, {
 		return !!this._keysDown[key];
 	}
 });
+//call with if(InputManager.InputManager.keyDown(game.inputManager.Keys.RIGHT)) 

@@ -7,8 +7,8 @@ import javax.swing.*;
 
 public class Game extends JPanel implements Runnable {
     private static final double TICKRATE = 60;
-    private static final int windowWidth = 1080;
-    private static final int windowHeight = 720;
+    private static final int WINDOW_WIDTH = 1080;
+    private static final int WINDOW_HEIGHT = 720;
     private boolean isGameRunning = false;
     private GameStateManager gsm;
     public JFrame window;
@@ -37,8 +37,8 @@ public class Game extends JPanel implements Runnable {
         String[] selectBoatStateImages = {"SelectBoatStateBackground.png", "Back.png"};
         gsm.loadState(1, selectBoatStateImages);
 
-        //String[] raceStateImages = {};
-        //gsm.loadState(2, raceStateImages);
+        String[] raceStateImages = { "Water.png" };
+        gsm.loadState(2, raceStateImages);
 
         //String[] EndRaceStateImages = {};
         //gsm.loadState(3, raceStateImages);
@@ -50,7 +50,7 @@ public class Game extends JPanel implements Runnable {
     private void setupWindow() {
         window = new JFrame("Game name");
 
-        window.setPreferredSize(new Dimension(windowWidth, windowHeight));
+        window.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         window.getContentPane().add(instance);
         window.pack();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +60,8 @@ public class Game extends JPanel implements Runnable {
 
     @Override
     public void paintComponent(Graphics g) {
-        gsm.draw(g);
+        if (gsm != null)
+            gsm.draw(g);
     }
 
     public void update() {
@@ -95,5 +96,6 @@ public class Game extends JPanel implements Runnable {
     }
 
     private void tick() {
+
     }
 }

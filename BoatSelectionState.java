@@ -1,10 +1,13 @@
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.Arrays;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.ButtonModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.net.PortUnreachableException;
 
 public class BoatSelectionState extends GameState{
 
@@ -18,15 +21,13 @@ public class BoatSelectionState extends GameState{
 
     @Override
     public void loadImages(String[] images) {
-        super.loadImages(images);
-        try{
+        try {
             for (int i = 0; i < images.length;i++){
-                if(images[i] == "SelectBoatStateBackground.png"){
+                if (images[i] == "SelectBoatStateBackground.png"){
                     background = ImageIO.read(getClass().getResource("/Resources/"+images[i]));
                 }
-                if(images[i] == "Back.png"){
-                    back = new ImageIcon(getClass().getResource("/Resources/" + images[i])) {
-                    };
+                if (images[i] == "Back.png"){
+                    back = new ImageIcon(getClass().getResource("/Resources/" + images[i])) {};
                 }
             }
         }catch (Exception e){
@@ -39,12 +40,12 @@ public class BoatSelectionState extends GameState{
     public void initButtons(){
         backButton = new JButton(back);
 
-        backButton.setBounds(0,0, 109, 39);
+        backButton.setBounds(0, 0, 109, 39);
 
-        ButtonModel model = backButton.getModel();
-        model.addChangeListener(new ChangeListener() {
+        ButtonModel backButtonModel = backButton.getModel();
+        backButtonModel.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                if (model.isPressed()){
+                if (backButtonModel.isPressed()){
                     gsm.setState(0);
                 }
             }
@@ -52,7 +53,7 @@ public class BoatSelectionState extends GameState{
     }
 
     @Override
-    public void showButtons(){
+    public void showButtons() {
         Game.instance.add(backButton);
     }
 
@@ -63,12 +64,10 @@ public class BoatSelectionState extends GameState{
 
     @Override
     public void update() {
-        super.update();
     }
 
     @Override
     public void draw(Graphics g) {
-        super.draw(g);
-        g.drawImage(background, 0, 0,null);
+        g.drawImage(background, 0, 0, null);
     }
 }

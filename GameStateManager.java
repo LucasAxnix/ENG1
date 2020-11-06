@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.awt.*;
 
 
-public class GameStateManager{
+public class GameStateManager {
 
     private ArrayList<GameState> gameStateList;
     public int currentState;
@@ -19,6 +19,7 @@ public class GameStateManager{
         //gameStateList.add(new game)
         gameStateList.add(new MenuState(this));
         gameStateList.add(new BoatSelectionState(this));
+        gameStateList.add(new RaceScreen(this));
 
         gameStateList.get(currentState).showButtons();
     }

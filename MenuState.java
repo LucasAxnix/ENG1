@@ -1,3 +1,5 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.*;
 import javax.swing.*;
@@ -37,6 +39,7 @@ public class MenuState extends GameState{
 
     @Override
     public void initButtons(){
+<<<<<<< Updated upstream
         button1 = new JButton(new ImageIcon(getClass().getResource("/Resources/MenuStateStartGame.png")));
 
         button1.setBounds(150,200, 167, 47);
@@ -47,6 +50,13 @@ public class MenuState extends GameState{
                 if (model.isPressed()){
                     gsm.setState(1);
                 }
+=======
+        startButton = new JButton(new ImageIcon(getClass().getResource("/Resources/MenuStateStartGame.png")));
+        startButton.setBounds(150, 200, 167, 47);
+        startButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gsm.setState(1);
+>>>>>>> Stashed changes
             }
         });
     }
@@ -58,9 +68,13 @@ public class MenuState extends GameState{
     }
 
     @Override
+<<<<<<< Updated upstream
     public void update() {
         super.update();
     }
+=======
+    public void update() {    }
+>>>>>>> Stashed changes
 
     @Override
     public void showButtons(){

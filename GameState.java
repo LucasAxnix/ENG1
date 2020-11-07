@@ -12,10 +12,18 @@ public abstract class GameState {
 
     private ArrayList<GameEntity> GameEntitys;
     protected GameStateManager gsm;
+    protected Boolean beingPressed;
 
+<<<<<<< Updated upstream
     public GameState(GameStateManager Gsm){
         gsm = Gsm;
         GameEntitys = new ArrayList<GameEntity>();
+=======
+    public GameState(GameStateManager gsm) {
+        beingPressed = false;
+        this.gsm = gsm;
+        gameEntities = new ArrayList<GameEntity>();
+>>>>>>> Stashed changes
     }
 
     public void initButtons(){ }

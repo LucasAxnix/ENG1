@@ -39,13 +39,8 @@ public class Game extends JPanel implements Runnable {
                 "greenBoat.png", "lilacBoat.png", "selectBoatTitle.png"};
         gsm.loadState(1, boatSelectionStateImages);
 
-<<<<<<< Updated upstream
-        //String[] raceStateImages = {};
-        //gsm.loadState(2, raceStateImages);
-=======
         String[] raceStateImages = { "Water.png", "orangeBoat.png", "redBoat.png", "greenBoat.png", "lilacBoat.png" };
         gsm.loadState(2, raceStateImages);
->>>>>>> Stashed changes
 
         //String[] EndRaceStateImages = {};
         //gsm.loadState(3, raceStateImages);

@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +5,6 @@ import java.util.EventListener;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
->>>>>>> Stashed changes
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -41,17 +38,8 @@ public class BoatSelectionState extends GameState{
 
     @Override
     public void loadImages(String[] images) {
-        super.loadImages(images);
         try{
             for (int i = 0; i < images.length;i++){
-<<<<<<< Updated upstream
-                if(images[i] == "SelectBoatStateBackground.png"){
-                    background = ImageIO.read(getClass().getResource("/Resources/"+images[i]));
-                }
-                if(images[i] == "Back.png"){
-                    back = new ImageIcon(getClass().getResource("/Resources/" + images[i])) {
-                    };
-=======
                 if (images[i] == "blue.png"){
                     background = ImageIO.read(getClass().getResource("/Resources/"+images[i]));
                 }
@@ -72,7 +60,6 @@ public class BoatSelectionState extends GameState{
                 }
                 if (images[i] == "Back.png"){
                     back = new ImageIcon(getClass().getResource("/Resources/" + images[i])) {};
->>>>>>> Stashed changes
                 }
                 if (images[i] == "selectBoat1.png"){
                     selectBoat1 = new ImageIcon(getClass().getResource("/Resources/" + images[i])) {};
@@ -97,15 +84,6 @@ public class BoatSelectionState extends GameState{
     @Override
     public void initButtons(){
         backButton = new JButton(back);
-<<<<<<< Updated upstream
-
-        backButton.setBounds(0,0, 109, 39);
-
-        ButtonModel model = backButton.getModel();
-        model.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                if (model.isPressed()){
-=======
         backButton.setBounds(0, 0, 109, 39);
         ButtonModel backButtonModel = backButton.getModel();
         backButtonModel.addChangeListener(new ChangeListener() {
@@ -113,7 +91,6 @@ public class BoatSelectionState extends GameState{
             public void stateChanged(ChangeEvent e) {
                 if (backButtonModel.isPressed()){
                     System.out.println("Pressed");
->>>>>>> Stashed changes
                     gsm.setState(0);
                 }
             }
@@ -157,15 +134,11 @@ public class BoatSelectionState extends GameState{
     }
 
     @Override
-<<<<<<< Updated upstream
-    public void showButtons(){
-=======
     public void showButtons() {
         Game.instance.add(selectBoat1Button);
         Game.instance.add(selectBoat2Button);
         Game.instance.add(selectBoat3Button);
         Game.instance.add(selectBoat4Button);
->>>>>>> Stashed changes
         Game.instance.add(backButton);
     }
 
@@ -179,22 +152,15 @@ public class BoatSelectionState extends GameState{
     }
 
     @Override
-    public void update() {
-        super.update();
-    }
+    public void update() {}
 
     @Override
     public void draw(Graphics g) {
-<<<<<<< Updated upstream
-        super.draw(g);
-        g.drawImage(background, 0, 0,null);
-=======
         g.drawImage(background, 0, 0, null);
         g.drawImage(greenBoat, 30, 200, null);
         g.drawImage(lilacBoat, 30, 300, null);
         g.drawImage(redBoat, 30, 400, null);
         g.drawImage(orangeBoat, 30, 500, null);
         g.drawImage(title,290,50, null);
->>>>>>> Stashed changes
     }
 }

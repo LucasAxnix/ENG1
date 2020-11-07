@@ -12,7 +12,7 @@ public class MenuState extends GameState{
 
     private BufferedImage background;
     private BufferedImage startGame;
-    private JButton button1;
+    private JButton startButton;
 
     public MenuState(GameStateManager gsm){
         super(gsm);
@@ -21,7 +21,6 @@ public class MenuState extends GameState{
 
     @Override
     public void loadImages(String[] images) {
-        super.loadImages(images);
         try{
             for (int i = 0; i < images.length;i++){
                 if(images[i] == "MenuStateBackground.png"){
@@ -39,50 +38,30 @@ public class MenuState extends GameState{
 
     @Override
     public void initButtons(){
-<<<<<<< Updated upstream
-        button1 = new JButton(new ImageIcon(getClass().getResource("/Resources/MenuStateStartGame.png")));
-
-        button1.setBounds(150,200, 167, 47);
-
-        ButtonModel model = button1.getModel();
-        model.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                if (model.isPressed()){
-                    gsm.setState(1);
-                }
-=======
         startButton = new JButton(new ImageIcon(getClass().getResource("/Resources/MenuStateStartGame.png")));
         startButton.setBounds(150, 200, 167, 47);
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 gsm.setState(1);
->>>>>>> Stashed changes
             }
         });
     }
 
     @Override
     public void draw(Graphics g) {
-        super.draw(g);
         g.drawImage(background,0,0,null);
     }
 
     @Override
-<<<<<<< Updated upstream
-    public void update() {
-        super.update();
-    }
-=======
     public void update() {    }
->>>>>>> Stashed changes
 
     @Override
     public void showButtons(){
-        Game.instance.add(button1);
+        Game.instance.add(startButton);
     }
 
     @Override
     public void hideButtons(){
-        Game.instance.remove(button1);
+        Game.instance.remove(startButton);
     }
 }

@@ -18,19 +18,13 @@ public class GameStateManager{
         currentState = 0;
         gameStateList.add(new MenuState(this));
         gameStateList.add(new BoatSelectionState(this));
-<<<<<<< Updated upstream
-=======
         gameStateList.add(new RaceState(this));
->>>>>>> Stashed changes
 
         gameStateList.get(currentState).showButtons();
     }
 
     public void setState(int state){
         gameStateList.get(currentState).hideButtons();
-        for (var c : Game.instance.getComponents()) {
-            System.out.println(c.toString());
-        }
         currentState = state;
         gameStateList.get(currentState).initButtons();
         gameStateList.get(currentState).showButtons();

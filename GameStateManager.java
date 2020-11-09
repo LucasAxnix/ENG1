@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 import java.awt.*;
 
-
-public class GameStateManager{
+public class GameStateManager {
+    private static GameStateManager instance;
 
     private ArrayList<GameState> gameStateList;
     public int currentState;
@@ -13,35 +13,38 @@ public class GameStateManager{
     public static final int ENDRACESTATE = 3;
     public static final int PODIUMSTATE = 4;
 
-    public GameStateManager(){
+    private GameStateManager() {
         gameStateList = new ArrayList<GameState>();
-        currentState = 0;
-        gameStateList.add(new MenuState(this));
-        gameStateList.add(new BoatSelectionState(this));
-        gameStateList.add(new RaceState(this));
-
-        gameStateList.get(currentState).showButtons();
+        gameStateList.add(new MenuState());
+        gameStateList.add(new BoatSelectionState());
+        gameStateList.add(new RaceState());
     }
 
-    public void setState(int state){
+    public static GameStateManager getInstance() {
+        if (instance == null) {
+            instance = new GameStateManager();
+        }
+        return instance;
+    }
+
+    public void setState(int state) {
         gameStateList.get(currentState).hideButtons();
         currentState = state;
         gameStateList.get(currentState).initButtons();
         gameStateList.get(currentState).showButtons();
     }
 
-    public void update(){
+    public void update() {
         gameStateList.get(currentState).update();
     }
 
-    public void draw(Graphics g){
+    public void draw(Graphics g) {
         gameStateList.get(currentState).draw(g);
     }
 
-    public void loadStates(){
-        for(int i = 0; i < gameStateList.size(); i++){
+    public void loadImages() {
+        for (int i = 0; i < gameStateList.size(); i++) {
             gameStateList.get(i).initImages();
         }
     }
 }
-

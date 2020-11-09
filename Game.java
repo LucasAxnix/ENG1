@@ -6,7 +6,7 @@ public class Game extends JPanel implements Runnable {
     private static final int windowWidth = 1080;
     private static final int windowHeight = 720;
     private boolean isGameRunning = false;
-    private GameStateManager gsm;
+    private boolean initialised = false;
     public JFrame window;
 
     public static Game instance;
@@ -20,13 +20,10 @@ public class Game extends JPanel implements Runnable {
     public void run() {
         instance.isGameRunning = true;
         setupWindow();
-        initGameStates();
+        initialised = true;
+        GameStateManager.getInstance().loadImages();
+        GameStateManager.getInstance().setState(0);
         instance.update();
-    }
-
-    private void initGameStates(){
-        gsm = new GameStateManager();
-        gsm.loadStates();
     }
 
     private void setupWindow() {
@@ -42,8 +39,8 @@ public class Game extends JPanel implements Runnable {
 
     @Override
     public void paintComponent(Graphics g) {
-        if (gsm != null){
-            gsm.draw(g);
+        if (initialised) {
+            GameStateManager.getInstance().draw(g);
         }
     }
 
@@ -55,7 +52,7 @@ public class Game extends JPanel implements Runnable {
         int frames = 0;
         long timer = System.currentTimeMillis();
 
-        while(isGameRunning) {
+        while (isGameRunning) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -74,7 +71,7 @@ public class Game extends JPanel implements Runnable {
                 update = 0;
                 frames = 0;
             }
-            gsm.update();
+            GameStateManager.getInstance().update();
         }
     }
 

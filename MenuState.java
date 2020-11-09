@@ -8,18 +8,18 @@ import java.awt.image.BufferedImage;
 public class MenuState extends GameState{
 
     private BufferedImage background;
-    private BufferedImage startGame;
+    private Icon startGame;
     private JButton startButton;
 
-    public MenuState(GameStateManager gsm){
-        super(gsm);
+    public MenuState(){
+        super();
     }
 
     @Override
     public void initImages() {
         try{
             background = ImageIO.read(getClass().getResource("/Resources/MenuStateBackground.png"));
-            startGame = ImageIO.read(getClass().getResource("/Resources/MenuStateStartGame.png"));
+            startGame = new ImageIcon(getClass().getResource("/Resources/MenuStateStartgame.png")){};
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -27,11 +27,11 @@ public class MenuState extends GameState{
 
     @Override
     public void initButtons(){
-        startButton = new JButton(new ImageIcon(getClass().getResource("/Resources/MenuStateStartGame.png")));
+        startButton = new JButton(startGame);
         startButton.setBounds(150, 200, 167, 47);
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                gsm.setState(1);
+                GameStateManager.getInstance().setState(1);
             }
         });
     }

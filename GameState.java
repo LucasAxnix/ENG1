@@ -4,10 +4,8 @@ import java.awt.*;
 public abstract class GameState {
 
     protected ArrayList<GameEntity> gameEntities;
-    protected GameStateManager gsm;
 
-    public GameState(GameStateManager gsm) {
-        this.gsm = gsm;
+    public GameState() {
         gameEntities = new ArrayList<GameEntity>();
         initButtons();
     }

@@ -27,8 +27,8 @@ public class BoatSelectionState extends GameState{
     private JButton selectBoat3Button;
     private JButton selectBoat4Button;
 
-    public BoatSelectionState(GameStateManager gsm){
-        super(gsm);
+    public BoatSelectionState(){
+        super();
     }
 
     @Override
@@ -56,13 +56,10 @@ public class BoatSelectionState extends GameState{
     public void initButtons(){
         backButton = new JButton(back);
         backButton.setBounds(0, 0, 109, 39);
-        ButtonModel backButtonModel = backButton.getModel();
-        backButtonModel.addChangeListener(new ChangeListener() {
+        backButton.addActionListener(new ActionListener() {
             @Override
-            public void stateChanged(ChangeEvent e) {
-                if (backButtonModel.isPressed()){
-                    gsm.setState(0);
-                }
+            public void actionPerformed(ActionEvent e) {
+                GameStateManager.getInstance().setState(0);
             }
         });
 
@@ -71,7 +68,7 @@ public class BoatSelectionState extends GameState{
         selectBoat1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gsm.setState(2);
+                GameStateManager.getInstance().setState(2);
             }
         });
 
@@ -80,7 +77,7 @@ public class BoatSelectionState extends GameState{
         selectBoat2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gsm.setState(2);
+                GameStateManager.getInstance().setState(2);
             }
         });
 
@@ -89,7 +86,7 @@ public class BoatSelectionState extends GameState{
         selectBoat3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gsm.setState(2);
+                GameStateManager.getInstance().setState(2);
             }
         });
 
@@ -98,7 +95,7 @@ public class BoatSelectionState extends GameState{
         selectBoat4Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gsm.setState(2);
+                GameStateManager.getInstance().setState(2);
             }
         });
     }

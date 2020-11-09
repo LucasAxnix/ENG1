@@ -11,8 +11,8 @@ public class RaceState extends GameState {
 
     private BufferedImage backgroundImage;
 
-    public RaceState(GameStateManager gsm) {
-        super(gsm);
+    public RaceState() {
+        super();
         boatImages = new ArrayList<BufferedImage>();
     }
 

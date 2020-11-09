@@ -1,56 +1,31 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Game extends JPanel implements Runnable {
     private static final double TICKRATE = 60;
-    private static final int WINDOW_WIDTH = 1080;
-    private static final int WINDOW_HEIGHT = 720;
+    private static final int windowWidth = 1080;
+    private static final int windowHeight = 720;
     private boolean isGameRunning = false;
-    private GameStateManager gsm;
+    private boolean initialised = false;
     public JFrame window;
 
     public static Game instance;
 
     public static void main(String[] args) {
-        instance = new Game();
-        Thread thread = new Thread(instance);
+        Thread thread = new Thread(getInstance());
         thread.start();
     }
 
     public void run() {
-        instance.isGameRunning = true;
+        isGameRunning = true;
         setupWindow();
-        initGameStates();
-        instance.update();
-    }
-
-    private void initGameStates(){
-        gsm = new GameStateManager();
-
-        String[] menuStateImages = {"MenuStateBackground.png", "MenuStateStartGame.png", "MenuStateStartGameArmed.png"};
-        gsm.loadState(0, menuStateImages);
-
-        String[] selectBoatStateImages = {"SelectBoatStateBackground.png", "Back.png"};
-        gsm.loadState(1, selectBoatStateImages);
-
-        String[] raceStateImages = { "Water.png" };
-        gsm.loadState(2, raceStateImages);
-
-        //String[] EndRaceStateImages = {};
-        //gsm.loadState(3, raceStateImages);
-
-        //String[] PodiumStateImages = {};
-        //gsm.loadState(4, raceStateImages);
+        update();
     }
 
     private void setupWindow() {
         window = new JFrame("Game name");
 
-        window.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+        window.setPreferredSize(new Dimension(windowWidth, windowHeight));
         window.getContentPane().add(instance);
         window.pack();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,8 +35,7 @@ public class Game extends JPanel implements Runnable {
 
     @Override
     public void paintComponent(Graphics g) {
-        if (gsm != null)
-            gsm.draw(g);
+        GameStateManager.getInstance().draw(g);
     }
 
     public void update() {
@@ -72,7 +46,7 @@ public class Game extends JPanel implements Runnable {
         int frames = 0;
         long timer = System.currentTimeMillis();
 
-        while(isGameRunning) {
+        while (isGameRunning) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -91,11 +65,17 @@ public class Game extends JPanel implements Runnable {
                 update = 0;
                 frames = 0;
             }
-            gsm.update();
         }
     }
 
     private void tick() {
+        GameStateManager.getInstance().update();
+    }
 
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
     }
 }

@@ -1,51 +1,37 @@
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
-public class MenuState extends GameState {
+public class MenuState extends GameState{
 
     private BufferedImage background;
-    private BufferedImage startGame;
+    private Icon startGame;
     private JButton startButton;
 
-    public MenuState(GameStateManager gsm){
-        super(gsm);
-        initButtons();
+    public MenuState(){
+        super();
     }
 
     @Override
-    public void loadImages(String[] images) {
+    public void initImages() {
         try{
-            for (int i = 0; i < images.length; i++){
-                if(images[i] == "MenuStateBackground.png"){
-                    background = ImageIO.read(getClass().getResource("/Resources/"+images[i]));
-                }
-                if(images[i] == "MenuStateStartGame.png"){
-                    startGame = ImageIO.read(getClass().getResource("/Resources/"+images[i]));
-                }
-            }
+            background = ImageIO.read(getClass().getResource("/Resources/MenuStateBackground.png"));
+            startGame = new ImageIcon(getClass().getResource("/Resources/MenuStateStartgame.png"));
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void initButtons(){
-        startButton = new JButton(new ImageIcon(getClass().getResource("/Resources/MenuStateStartGame.png")));
-
+        startButton = new JButton(startGame);
         startButton.setBounds(150, 200, 167, 47);
-
-        ButtonModel startButtonModel = startButton.getModel();
-        startButtonModel.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                if (startButtonModel.isPressed()){
-                    gsm.setState(1);
-                }
+        startButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                GameStateManager.getInstance().setState(1);
             }
         });
     }
@@ -61,7 +47,7 @@ public class MenuState extends GameState {
     }
 
     @Override
-    public void showButtons(){
+    public void showButtons() {
         Game.instance.add(startButton);
     }
 

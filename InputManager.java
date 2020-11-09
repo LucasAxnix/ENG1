@@ -1,4 +1,4 @@
-var InputManager = inherits(function() { }, {
+/*(var InputManager = inherits(function() { }, {
 	'Keys': {
 		'UP' : 38
 		'DOWN' : 40
@@ -28,5 +28,5 @@ var InputManager = inherits(function() { }, {
 	'keyDown': function(key) {
 		return !!this._keysDown[key];
 	}
-});
+});*/
 //call with if(InputManager.InputManager.keyDown(game.inputManager.Keys.RIGHT)) 

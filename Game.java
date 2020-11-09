@@ -1,8 +1,4 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Game extends JPanel implements Runnable {
@@ -30,28 +26,7 @@ public class Game extends JPanel implements Runnable {
 
     private void initGameStates(){
         gsm = new GameStateManager();
-
-        String[] menuStateImages = {"MenuStateBackground.png", "MenuStateStartGame.png", "MenuStateStartGameArmed.png"};
-        gsm.loadState(0, menuStateImages);
-
-        String[] boatSelectionStateImages = {"blue.png", "Back.png", "selectBoat1.png",
-                "selectBoat2.png", "selectBoat3.png", "selectBoat4.png", "orangeBoat.png", "redBoat.png",
-                "greenBoat.png", "lilacBoat.png", "selectBoatTitle.png"};
-        gsm.loadState(1, boatSelectionStateImages);
-
-<<<<<<< Updated upstream
-        //String[] raceStateImages = {};
-        //gsm.loadState(2, raceStateImages);
-=======
-        String[] raceStateImages = { "Water.png", "orangeBoat.png", "redBoat.png", "greenBoat.png", "lilacBoat.png" };
-        gsm.loadState(2, raceStateImages);
->>>>>>> Stashed changes
-
-        //String[] EndRaceStateImages = {};
-        //gsm.loadState(3, raceStateImages);
-
-        //String[] PodiumStateImages = {};
-        //gsm.loadState(4, raceStateImages);
+        gsm.loadStates();
     }
 
     private void setupWindow() {
@@ -67,7 +42,9 @@ public class Game extends JPanel implements Runnable {
 
     @Override
     public void paintComponent(Graphics g) {
-        gsm.draw(g);
+        if (gsm != null){
+            gsm.draw(g);
+        }
     }
 
     public void update() {

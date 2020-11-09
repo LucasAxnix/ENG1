@@ -2,7 +2,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
+
 
 public class RaceState extends GameState {
 
@@ -46,14 +46,14 @@ public class RaceState extends GameState {
     }
 
     @Override
-    public void loadImages(String[] images) {
+    public void initImages() {
         try {
             // Load boat images and store them in boat images list
 
             /// TEMP
-            boatImages.add(ImageIO.read(getClass().getResource("/Resources//greenBoat.png")));
+            boatImages.add(ImageIO.read(getClass().getResource("/Resources/greenBoat.png")));
             ///
-            backgroundImage = ImageIO.read(getClass().getResource("/Resources/" + images[0]));
+            backgroundImage = ImageIO.read(getClass().getResource("/Resources/Water.png"));
             instantiateBoats();
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,6 +69,4 @@ public class RaceState extends GameState {
     public void update() {
         
     }
-
-
 }

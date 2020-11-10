@@ -1,4 +1,4 @@
-public class Boat{
+public class River{
 	private int Level;
 	private String Background;
 

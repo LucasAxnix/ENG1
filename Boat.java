@@ -3,10 +3,11 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Boat extends GameEntity {
-	private int speed;
-	private int acceleration;
+	private int speed; // pixels per second
+	private int acceleration; // 
 	private int durability;
 	private int maneuverability;
+	public boolean isPlayer;
 
 	public Boat(int speed, int acceleration, int durability, int maneuverability, BufferedImage sprite) {
 		super(0, 360, sprite);
@@ -31,7 +32,9 @@ public class Boat extends GameEntity {
 
 	@Override
 	public void update() {
-		
+		if (!isPlayer){
+			x += speed / 60;
+		}
 	}
 }
 	//Initiate by calling "Boat boatname = new Boat(speed, acc, dur, man)"

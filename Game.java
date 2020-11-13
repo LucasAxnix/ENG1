@@ -12,20 +12,24 @@ public class Game extends JPanel implements Runnable {
     public static Game instance;
 
     public static void main(String[] args) {
-        Thread thread = new Thread(getInstance());
+        instance = new Game();
+        Thread thread = new Thread(instance);
         thread.start();
     }
 
     public void run() {
-        isGameRunning = true;
+        instance.isGameRunning = true;
         setupWindow();
-        update();
+        initialised = true;
+        GameStateManager.getInstance().loadImages();
+        GameStateManager.getInstance().setState(0);
+        instance.update();
     }
 
     private void setupWindow() {
         window = new JFrame("Game name");
 
-        window.setPreferredSize(new Dimension(windowWidth, windowHeight));
+        setPreferredSize(new Dimension(windowWidth, windowHeight));
         window.getContentPane().add(instance);
         window.pack();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,7 +39,9 @@ public class Game extends JPanel implements Runnable {
 
     @Override
     public void paintComponent(Graphics g) {
-        GameStateManager.getInstance().draw(g);
+        if (initialised) {
+            GameStateManager.getInstance().draw(g);
+        }
     }
 
     public void update() {
@@ -70,12 +76,5 @@ public class Game extends JPanel implements Runnable {
 
     private void tick() {
         GameStateManager.getInstance().update();
-    }
-
-    public static Game getInstance() {
-        if (instance == null) {
-            instance = new Game();
-        }
-        return instance;
     }
 }

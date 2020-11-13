@@ -7,7 +7,7 @@ public abstract class GameState {
 
     public GameState() {
         gameEntities = new ArrayList<GameEntity>();
-        //initButtons();
+        initButtons();
     }
 
     public abstract void initButtons();

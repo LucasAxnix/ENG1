@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.awt.*;
 
 public class GameStateManager {
-    private static GameStateManager instance = new GameStateManager();
+    private static GameStateManager instance;
 
     private ArrayList<GameState> gameStateList;
     public int currentState;
@@ -18,13 +18,12 @@ public class GameStateManager {
         gameStateList.add(new MenuState());
         gameStateList.add(new BoatSelectionState());
         gameStateList.add(new RaceState());
-        loadImages();
-        currentState = 0;
-        gameStateList.get(currentState).initButtons();
-        gameStateList.get(currentState).showButtons();
     }
 
     public static GameStateManager getInstance() {
+        if (instance == null) {
+            instance = new GameStateManager();
+        }
         return instance;
     }
 

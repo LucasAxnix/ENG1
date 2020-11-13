@@ -8,21 +8,22 @@ public class RaceState extends GameState {
 
     private ArrayList<BufferedImage> boatImages;
     private ArrayList<Boat> boats;
-
     private BufferedImage backgroundImage;
+    private River river;
 
     public RaceState() {
         super();
         boatImages = new ArrayList<BufferedImage>();
+        river = new River();
     }
 
     private void instantiateBoats() {
         boats = new ArrayList<Boat>() {
             {
-                add(new Boat(1, 1, 1, 1, boatImages.get(0)));
-                add(new Boat(1, 1, 1, 1, boatImages.get(0)));
-                add(new Boat(1, 1, 1, 1, boatImages.get(0)));
-                add(new Boat(1, 1, 1, 1, boatImages.get(0)));
+                add(new Boat(0, 10, 1, 1, 1, 1, boatImages.get(0), false));
+                add(new Boat(0, 300, 1, 1, 1, 1, boatImages.get(0), true));
+                add(new Boat(0, 580, 1, 1, 1, 1, boatImages.get(0), false));
+                add(new Boat(0, 660, 1, 1, 1, 1, boatImages.get(0), false));
             }
         };
     }
@@ -30,6 +31,7 @@ public class RaceState extends GameState {
     @Override
     public void draw(Graphics g) {
         g.drawImage(backgroundImage, 0, 0, null);
+        river.draw(g);
         for (Boat b : boats) {
             b.draw(g);
         }
@@ -67,6 +69,8 @@ public class RaceState extends GameState {
 
     @Override
     public void update() {
-        
+        for (Boat b : boats) {
+            b.update();
+        }
     }
 }

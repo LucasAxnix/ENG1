@@ -19,7 +19,7 @@ public class MenuState extends GameState{
     public void initImages() {
         try{
             background = ImageIO.read(getClass().getResource("/Resources/MenuStateBackground.png"));
-            startGame = new ImageIcon(getClass().getResource("/Resources/MenuStateStartgame.png"));
+            startGame = new ImageIcon(getClass().getResource("/Resources/MenuStateStartgame.png")){};
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -38,16 +38,14 @@ public class MenuState extends GameState{
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(background, 0, 0, null);
+        g.drawImage(background,0,0,null);
     }
 
     @Override
-    public void update() {
-
-    }
+    public void update() {    }
 
     @Override
-    public void showButtons() {
+    public void showButtons(){
         Game.instance.add(startButton);
     }
 

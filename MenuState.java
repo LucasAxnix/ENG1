@@ -18,8 +18,8 @@ public class MenuState extends GameState{
     @Override
     public void initImages() {
         try{
-            background = ImageIO.read(getClass().getResource("/Resources/MenuStateBackground.png"));
-            startGame = new ImageIcon(getClass().getResource("/Resources/MenuStateStartgame.png")){};
+            background = ImageIO.read(getClass().getResource("/Resources/menuStateBackground.png"));
+            startGame = new ImageIcon(getClass().getResource("/Resources/menuStateStartgame.png")){};
         }catch (Exception e){
             e.printStackTrace();
         }

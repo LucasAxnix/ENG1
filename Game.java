@@ -29,7 +29,7 @@ public class Game extends JPanel implements Runnable {
     private void setupWindow() {
         window = new JFrame("Game name");
 
-        window.setPreferredSize(new Dimension(windowWidth, windowHeight));
+        setPreferredSize(new Dimension(windowWidth, windowHeight));
         window.getContentPane().add(instance);
         window.pack();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,10 +71,10 @@ public class Game extends JPanel implements Runnable {
                 update = 0;
                 frames = 0;
             }
-            GameStateManager.getInstance().update();
         }
     }
 
     private void tick() {
+        GameStateManager.getInstance().update();
     }
 }

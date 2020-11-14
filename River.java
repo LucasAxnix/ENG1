@@ -46,7 +46,7 @@ public class River{
 
 	public River(){
 		try{
-			background = ImageIO.read(getClass().getResource("/Resources/Water.png"));
+			background = ImageIO.read(getClass().getResource("/Resources/water.png"));
 			duck = ImageIO.read(getClass().getResource("/Resources/duck.png"));
 			log = ImageIO.read(getClass().getResource("/Resources/log.png"));
 			rock = ImageIO.read(getClass().getResource("/Resources/rock.png"));

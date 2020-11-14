@@ -55,7 +55,7 @@ public class RaceState extends GameState {
             /// TEMP
             boatImages.add(ImageIO.read(getClass().getResource("/Resources/greenBoat.png")));
             ///
-            backgroundImage = ImageIO.read(getClass().getResource("/Resources/Water.png"));
+            backgroundImage = ImageIO.read(getClass().getResource("/Resources/water.png"));
             instantiateBoats();
         } catch (Exception e) {
             e.printStackTrace();

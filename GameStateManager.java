@@ -34,6 +34,10 @@ public class GameStateManager {
         gameStateList.get(currentState).showButtons();
     }
 
+    public GameState getCurrentState() {
+        return gameStateList.get(currentState);
+    }
+
     public void update() {
         gameStateList.get(currentState).update();
     }

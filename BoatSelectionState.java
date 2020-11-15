@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class BoatSelectionState extends GameState{
+public class BoatSelectionState extends GameState {
 
     private BufferedImage background;
     private BufferedImage greenBoat;
@@ -27,13 +27,13 @@ public class BoatSelectionState extends GameState{
     private JButton selectBoat3Button;
     private JButton selectBoat4Button;
 
-    public BoatSelectionState(){
+    public BoatSelectionState() {
         super();
     }
 
     @Override
     public void initImages() {
-        try{
+        try {
             background = ImageIO.read(getClass().getResource("/Resources/blue.png"));
             greenBoat = ImageIO.read(getClass().getResource("/Resources/greenBoat.png"));
             redBoat = ImageIO.read(getClass().getResource("/Resources/lilacBoat.png"));
@@ -41,19 +41,23 @@ public class BoatSelectionState extends GameState{
             orangeBoat = ImageIO.read(getClass().getResource("/Resources/orangeBoat.png"));
             title = ImageIO.read(getClass().getResource("/Resources/selectBoatTitle.png"));
 
-            back = new ImageIcon(getClass().getResource("/Resources/back.png")) {};
-            selectBoat1 = new ImageIcon(getClass().getResource("/Resources/selectBoat1.png")) {};
-            selectBoat2 = new ImageIcon(getClass().getResource("/Resources/selectBoat2.png")) {};
-            selectBoat3 = new ImageIcon(getClass().getResource("/Resources/selectBoat3.png")) {};
-            selectBoat4 = new ImageIcon(getClass().getResource("/Resources/selectBoat4.png")) {};
-        }catch (Exception e){
+            back = new ImageIcon(getClass().getResource("/Resources/back.png")) {
+            };
+            selectBoat1 = new ImageIcon(getClass().getResource("/Resources/selectBoat1.png")) {
+            };
+            selectBoat2 = new ImageIcon(getClass().getResource("/Resources/selectBoat2.png")) {
+            };
+            selectBoat3 = new ImageIcon(getClass().getResource("/Resources/selectBoat3.png")) {
+            };
+            selectBoat4 = new ImageIcon(getClass().getResource("/Resources/selectBoat4.png")) {
+            };
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
     @Override
-    public void initButtons(){
+    public void initButtons() {
         backButton = new JButton(back);
         backButton.setBounds(0, 0, 109, 39);
         backButton.addActionListener(new ActionListener() {
@@ -69,6 +73,7 @@ public class BoatSelectionState extends GameState{
             @Override
             public void actionPerformed(ActionEvent e) {
                 GameStateManager.getInstance().setState(2);
+                setPlayerBoat(BoatType.GREEN);
             }
         });
 
@@ -78,6 +83,7 @@ public class BoatSelectionState extends GameState{
             @Override
             public void actionPerformed(ActionEvent e) {
                 GameStateManager.getInstance().setState(2);
+                setPlayerBoat(BoatType.RED);
             }
         });
 
@@ -87,6 +93,7 @@ public class BoatSelectionState extends GameState{
             @Override
             public void actionPerformed(ActionEvent e) {
                 GameStateManager.getInstance().setState(2);
+                setPlayerBoat(BoatType.LILAC);
             }
         });
 
@@ -96,8 +103,14 @@ public class BoatSelectionState extends GameState{
             @Override
             public void actionPerformed(ActionEvent e) {
                 GameStateManager.getInstance().setState(2);
+                setPlayerBoat(BoatType.ORANGE);
             }
         });
+    }
+
+    private void setPlayerBoat(BoatType boatType) {
+        RaceState rs = (RaceState) (GameStateManager.getInstance().getCurrentState());
+        rs.instantiateBoats(boatType);
     }
 
     @Override
@@ -110,7 +123,7 @@ public class BoatSelectionState extends GameState{
     }
 
     @Override
-    public void hideButtons(){
+    public void hideButtons() {
         Game.instance.remove(selectBoat1Button);
         Game.instance.remove(selectBoat2Button);
         Game.instance.remove(selectBoat3Button);
@@ -119,15 +132,16 @@ public class BoatSelectionState extends GameState{
     }
 
     @Override
-    public void update() {}
+    public void update() {
+    }
 
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, 0, 0, null);
         g.drawImage(greenBoat, 30, 200, null);
-        g.drawImage(lilacBoat, 30, 300, null);
         g.drawImage(redBoat, 30, 400, null);
+        g.drawImage(lilacBoat, 30, 300, null);
         g.drawImage(orangeBoat, 30, 500, null);
-        g.drawImage(title,290,50, null);
+        g.drawImage(title, 290, 50, null);
     }
 }

@@ -11,14 +11,16 @@ public class River extends GameEntity {
 	private BufferedImage log;
 	private BufferedImage rock;
 	private ArrayList<Obstacle> obstacles;
+	private FinishLine finishLine;
+	private BufferedImage finishLineImage;
 
 	private int speed = 5;
 	private int playerX = 0;
 
 	private int[][][] obstaclePositions = { { // race one positions
-			{ 600, 520 }, { 600, 470 }, { 600, 420 }, { 600, 370 }, { 600, 320 }, { 600, 270 }, { 1400, 300 },
-			{ 1400, 320 }, { 1400, 270 }, { 1400, 220 }, { 1400, 170 }, { 1400, 120 }, { 2500, 570 }, { 2500, 420 },
-			{ 2500, 470 }, { 2500, 120 }, { 2500, 170 }, { 2500, 220 } },
+			{ 600, 520 }, { 600, 470 }, { 600, 420 }, { 600, 370 }, { 600, 320 }, { 600, 270 },
+			{ 1400, 75 }, { 1400, 125 }, { 1400, 175 }, { 1400, 225 }, { 1400, 275 }, { 1400, 325 },
+			{ 2500, 75 }, { 2500, 125 }, { 2500, 175 }, { 2500, 520 }, { 2500, 470 }, { 2500, 420 } },
 			{ // race two positions TODO: add more obstacles
 					{ 400, 500 }, { 1000, 300 }, { 1200, 400 }, { 1600, 300 }, { 2000, 400 } },
 			{ // race three positions TODO: add more obstacles
@@ -32,11 +34,13 @@ public class River extends GameEntity {
 			duck = ImageIO.read(getClass().getResource("/Resources/duck.png"));
 			log = ImageIO.read(getClass().getResource("/Resources/log.png"));
 			rock = ImageIO.read(getClass().getResource("/Resources/rock.png"));
+			finishLineImage = ImageIO.read(getClass().getResource("/Resources/finishLine.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		obstacles = new ArrayList<Obstacle>();
 		initRace(0);
+		finishLine = new FinishLine(500, 0, finishLineImage);
 	}
 
 	public void initRace(int _raceNumber) {
@@ -66,6 +70,7 @@ public class River extends GameEntity {
 		for (Obstacle o : obstacles) {
 			o.draw(g);
 		}
+		finishLine.draw(g);
 	}
 
 	public void setSpeed(int speed) {
@@ -82,9 +87,14 @@ public class River extends GameEntity {
 		for (Obstacle o : obstacles) {
 			o.x = playerX + o.obstaclePositionX;
 		}
+		finishLine.x = playerX + finishLine.finishLinePositionX;
 	}
 
 	public ArrayList<Obstacle> getObstacles() {
 		return obstacles;
+	}
+
+	public FinishLine getFinishLine(){
+		return finishLine;
 	}
 }

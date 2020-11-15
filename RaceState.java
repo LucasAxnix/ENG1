@@ -6,9 +6,11 @@ import java.awt.image.BufferedImage;
 public class RaceState extends GameState {
 
     private ArrayList<BufferedImage> boatImages;
-    private ArrayList<Boat> boats;
     private BufferedImage backgroundImage;
     private River river;
+
+    public ArrayList<Boat> boats;
+
 
     public RaceState() {
         super();
@@ -76,8 +78,12 @@ public class RaceState extends GameState {
     @Override
     public void update() {
         river.update();
+        FinishLine fl = river.getFinishLine();
         for (Boat b : boats) {
             b.update();
+            if (fl.collision(b)){
+                System.out.println("Boat finished");
+            }
         }
     }
 

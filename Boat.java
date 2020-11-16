@@ -8,6 +8,13 @@ public class Boat extends GameEntity {
 	private int durability;
 	private int maneuverability;
 	private boolean isPlayer;
+<<<<<<< Updated upstream
+=======
+	private int boatHealth;
+	private float speed;
+	private River river;
+	private int startYPosition;
+>>>>>>> Stashed changes
 
 	public Boat(int speed, int acceleration, int durability, int maneuverability, BufferedImage sprite) {
 		super(0, 0, sprite);
@@ -25,26 +32,36 @@ public class Boat extends GameEntity {
 		return bt;
 	}
 
+	public void resetPosition() {
+		x = 50;
+		y = startYPosition;
+	}
+
 	public void setPlayerBoat() {
 		this.isPlayer = true;
-		super.x = 50;
-		super.y = 300;
+		RaceState rs = (RaceState) GameStateManager.getInstance().getCurrentState();
+		river = rs.getRiver();
+		x = 50;
+		y = 300;
+		startYPosition = y;
 	}
 
 	public void setOpponentBoat(int racePos) {
-		super.x = 50;
+		RaceState rs = (RaceState) GameStateManager.getInstance().getCurrentState();
+		river = rs.getRiver();
+		x = 50;
 		switch (racePos) {
 			case 1:
-				super.y = 10;
+				y = 10;
 				break;
 			case 2:
-				super.y = 580;
+				y = 580;
 				break;
 			case 3:
-				super.y = 660;
+				y = 660;
 				break;
-
 		}
+		startYPosition = y;
 	}
 
 	@Override
@@ -54,13 +71,31 @@ public class Boat extends GameEntity {
 
 	@Override
 	public void update() {
+		speed += acceleration * 0.05f;
+		speed = Math.min(speed, maxSpeed);
 		if (!isPlayer) {
+<<<<<<< Updated upstream
 			x += speed / 60;
 		} else {
 			RaceState rs = (RaceState) GameStateManager.getInstance().getCurrentState();
 			for (Obstacle o : rs.getRiver().getObstacles()) {
 				if (collision(o))
 					System.out.println("collision");
+=======
+			x += speed - river.getSpeed();
+		} else {
+			river.setSpeed(speed);
+			ArrayList<Obstacle> obstacles = river.getObstacles();
+			for (int i = 0; i < obstacles.size(); i++) {
+				if (collision(obstacles.get(i))) {
+					speed = 0;
+					river.removeObstacle(obstacles.get(i));
+					boatHealth -= durability;
+					if (boatHealth < 0) {
+						// TODO: end game
+					}
+				}
+>>>>>>> Stashed changes
 			}
 			if (InputManager.getInstance().getUp()) {
 				y -= 1;

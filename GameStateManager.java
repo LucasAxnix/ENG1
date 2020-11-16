@@ -18,6 +18,7 @@ public class GameStateManager {
         gameStateList.add(new MenuState());
         gameStateList.add(new BoatSelectionState());
         gameStateList.add(new RaceState());
+        gameStateList.add(new EndRaceState());
     }
 
     public static GameStateManager getInstance() {
@@ -44,11 +45,5 @@ public class GameStateManager {
 
     public void draw(Graphics g) {
         gameStateList.get(currentState).draw(g);
-    }
-
-    public void loadImages() {
-        for (int i = 0; i < gameStateList.size(); i++) {
-            gameStateList.get(i).initImages();
-        }
     }
 }

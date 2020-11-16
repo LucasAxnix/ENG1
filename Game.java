@@ -21,7 +21,6 @@ public class Game extends JPanel implements Runnable {
         instance.isGameRunning = true;
         setupWindow();
         initialised = true;
-        GameStateManager.getInstance().loadImages();
         GameStateManager.getInstance().setState(0);
         instance.update();
     }

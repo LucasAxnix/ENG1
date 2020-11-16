@@ -5,28 +5,28 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
-public class MenuState extends GameState{
+public class MenuState extends GameState {
 
     private BufferedImage background;
     private Icon startGame;
     private JButton startButton;
 
-    public MenuState(){
+    public MenuState() {
         super();
     }
 
     @Override
     public void initImages() {
-        try{
+        try {
             background = ImageIO.read(getClass().getResource("/Resources/menuStateBackground.png"));
-            startGame = new ImageIcon(getClass().getResource("/Resources/menuStateStartgame.png")){};
-        }catch (Exception e){
+            startGame = new ImageIcon(getClass().getResource("/Resources/menuStateStartgame.png"));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void initButtons(){
+    public void initButtons() {
         startButton = new JButton(startGame);
         startButton.setBounds(150, 200, 167, 47);
         startButton.addActionListener(new ActionListener() {
@@ -38,19 +38,20 @@ public class MenuState extends GameState{
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(background,0,0,null);
+        g.drawImage(background, 0, 0, null);
     }
 
     @Override
-    public void update() {    }
+    public void update() {
+    }
 
     @Override
-    public void showButtons(){
+    public void showButtons() {
         Game.instance.add(startButton);
     }
 
     @Override
-    public void hideButtons(){
+    public void hideButtons() {
         Game.instance.remove(startButton);
     }
 }

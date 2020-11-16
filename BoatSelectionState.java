@@ -5,8 +5,6 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class BoatSelectionState extends GameState {
 
@@ -41,16 +39,11 @@ public class BoatSelectionState extends GameState {
             orangeBoat = ImageIO.read(getClass().getResource("/Resources/orangeBoat.png"));
             title = ImageIO.read(getClass().getResource("/Resources/selectBoatTitle.png"));
 
-            back = new ImageIcon(getClass().getResource("/Resources/back.png")) {
-            };
-            selectBoat1 = new ImageIcon(getClass().getResource("/Resources/selectBoat1.png")) {
-            };
-            selectBoat2 = new ImageIcon(getClass().getResource("/Resources/selectBoat2.png")) {
-            };
-            selectBoat3 = new ImageIcon(getClass().getResource("/Resources/selectBoat3.png")) {
-            };
-            selectBoat4 = new ImageIcon(getClass().getResource("/Resources/selectBoat4.png")) {
-            };
+            back = new ImageIcon(getClass().getResource("/Resources/back.png"));
+            selectBoat1 = new ImageIcon(getClass().getResource("/Resources/selectBoat1.png"));
+            selectBoat2 = new ImageIcon(getClass().getResource("/Resources/selectBoat2.png"));
+            selectBoat3 = new ImageIcon(getClass().getResource("/Resources/selectBoat3.png"));
+            selectBoat4 = new ImageIcon(getClass().getResource("/Resources/selectBoat4.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }

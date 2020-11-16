@@ -1,32 +1,26 @@
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import java.util.ArrayList;
 import java.util.Random;
+import java.util.*;
 
 public class River extends GameEntity {
-	private int raceNumber;
-	private BufferedImage background;
+
 	private BufferedImage duck;
 	private BufferedImage log;
 	private BufferedImage rock;
 	private ArrayList<Obstacle> obstacles;
 	private FinishLine finishLine;
 	private BufferedImage finishLineImage;
+	private boolean initialised = false;
 
 	private int speed = 5;
 	private int playerX = 0;
 
-	private int[][][] obstaclePositions = { { // race one positions
-			{ 600, 520 }, { 600, 470 }, { 600, 420 }, { 600, 370 }, { 600, 320 }, { 600, 270 },
-			{ 1400, 75 }, { 1400, 125 }, { 1400, 175 }, { 1400, 225 }, { 1400, 275 }, { 1400, 325 },
-			{ 2500, 75 }, { 2500, 125 }, { 2500, 175 }, { 2500, 520 }, { 2500, 470 }, { 2500, 420 } },
-			{ // race two positions TODO: add more obstacles
-					{ 400, 500 }, { 1000, 300 }, { 1200, 400 }, { 1600, 300 }, { 2000, 400 } },
-			{ // race three positions TODO: add more obstacles
-					{ 400, 500 }, { 1000, 300 }, { 1200, 400 }, { 1600, 300 }, { 2000, 400 } },
-			{ // race four positions TODO: add more obstacles
-					{ 400, 500 }, { 1000, 300 }, { 1200, 400 }, { 1600, 300 }, { 2000, 400 } } };
+	public int raceNumber;
+
+	private int[][] obstacleShapes = new int[][] { { 520, 470, 420, 370, 320, 270 }, { 75, 125, 175, 225, 275, 325 },
+			{ 520, 470, 420, 75, 125, 175 }, { 175, 470 }, {}, { 370, 320, 270 } };
 
 	public River(BufferedImage background) {
 		super(0, 0, background);
@@ -39,29 +33,37 @@ public class River extends GameEntity {
 			e.printStackTrace();
 		}
 		obstacles = new ArrayList<Obstacle>();
+<<<<<<< Updated upstream
 		initRace(0);
 		finishLine = new FinishLine(500, 0, finishLineImage);
+=======
+>>>>>>> Stashed changes
 	}
 
 	public void initRace(int _raceNumber) {
 		raceNumber = _raceNumber;
+		obstacles.clear();
 		Random rd = new Random();
-		int[][] positions = obstaclePositions[raceNumber];
-		for (int i = 0; i < positions.length; i++) {
-			BufferedImage sprite = null;
-			int random = rd.nextInt(3);
-			if (random == 0) {
-				sprite = duck;
+		int raceLength = 6000;
+		int numberOfShapes = 10;
+		for (int x = 600; x < raceLength; x += raceLength / numberOfShapes) {
+			int[] yValues = obstacleShapes[rd.nextInt(obstacleShapes.length)];
+			for (int y : yValues) {
+				BufferedImage sprite = null;
+				int random = rd.nextInt(3);
+				if (random == 0)
+					sprite = duck;
+				else if (random == 1)
+					sprite = log;
+				else
+					sprite = rock;
+				Obstacle obstacle = new Obstacle(x, y, sprite);
+				obstacles.add(obstacle);
 			}
-			if (random == 1) {
-				sprite = log;
-			}
-			if (random == 2) {
-				sprite = rock;
-			}
-			Obstacle obstacle = new Obstacle(positions[i][0], positions[i][1], sprite);
-			obstacles.add(obstacle);
 		}
+		RaceState rs = (RaceState) GameStateManager.getInstance().getCurrentState();
+		rs.resetBoats();
+		finishLine = new FinishLine(raceLength + (raceLength / numberOfShapes), 0, finishLineImage);
 	}
 
 	@Override
@@ -77,9 +79,20 @@ public class River extends GameEntity {
 		this.speed = speed;
 	}
 
+	public float getSpeed() {
+		return this.speed;
+	}
+
 	@Override
 	public void update() {
+<<<<<<< Updated upstream
 		if (x == -1080) {
+=======
+		if (!initialised) {
+			initRace(0);
+		}
+		if (x <= -1080) {
+>>>>>>> Stashed changes
 			x = 0;
 		}
 		x -= speed;
@@ -94,7 +107,15 @@ public class River extends GameEntity {
 		return obstacles;
 	}
 
+<<<<<<< Updated upstream
 	public FinishLine getFinishLine(){
+=======
+	public void removeObstacle(Obstacle obstacle) {
+		obstacles.remove(obstacle);
+	}
+
+	public FinishLine getFinishLine() {
+>>>>>>> Stashed changes
 		return finishLine;
 	}
 }

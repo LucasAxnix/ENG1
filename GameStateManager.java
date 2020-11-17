@@ -11,7 +11,8 @@ public class GameStateManager {
     public static final int SELECTBOATSTATE = 1;
     public static final int RACESTATE = 2;
     public static final int ENDRACESTATE = 3;
-    public static final int PODIUMSTATE = 4;
+    public static final int GAMEOVERSTATE = 4;
+    public static final int PODIUMSTATE = 5;
 
     private GameStateManager() {
         gameStateList = new ArrayList<GameState>();
@@ -19,6 +20,11 @@ public class GameStateManager {
         gameStateList.add(new BoatSelectionState());
         gameStateList.add(new RaceState());
         gameStateList.add(new EndRaceState());
+        gameStateList.add(new GameOverState());
+    }
+
+    public GameState getState(int state) {
+        return gameStateList.get(state);
     }
 
     public static GameStateManager getInstance() {

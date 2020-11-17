@@ -14,8 +14,8 @@ public class River extends GameEntity {
 	private BufferedImage finishLineImage;
 	private boolean initialised = false;
 
-	private int speed = 5;
-	private int playerX = 0;
+	private float speed;
+	private int playerX;
 
 	public int raceNumber;
 
@@ -33,19 +33,17 @@ public class River extends GameEntity {
 			e.printStackTrace();
 		}
 		obstacles = new ArrayList<Obstacle>();
-<<<<<<< Updated upstream
-		initRace(0);
-		finishLine = new FinishLine(500, 0, finishLineImage);
-=======
->>>>>>> Stashed changes
+		finishLine = new FinishLine(0, 0, null);
 	}
 
-	public void initRace(int _raceNumber) {
-		raceNumber = _raceNumber;
+	public void initRace(int raceNumber) {
+		this.raceNumber = raceNumber;
 		obstacles.clear();
 		Random rd = new Random();
 		int raceLength = 6000;
 		int numberOfShapes = 10;
+		playerX = 0;
+		speed = 0;
 		for (int x = 600; x < raceLength; x += raceLength / numberOfShapes) {
 			int[] yValues = obstacleShapes[rd.nextInt(obstacleShapes.length)];
 			for (int y : yValues) {
@@ -61,21 +59,22 @@ public class River extends GameEntity {
 				obstacles.add(obstacle);
 			}
 		}
-		RaceState rs = (RaceState) GameStateManager.getInstance().getCurrentState();
-		rs.resetBoats();
+		RaceState rs = (RaceState) GameStateManager.getInstance().getState(GameStateManager.RACESTATE);
+		rs.resetBoats(raceNumber);
 		finishLine = new FinishLine(raceLength + (raceLength / numberOfShapes), 0, finishLineImage);
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(sprite, x, 0, null);
-		for (Obstacle o : obstacles) {
+		finishLine.draw(g);
+		for (int i = 0; i < obstacles.size(); i++) {
+			Obstacle o = obstacles.get(i);
 			o.draw(g);
 		}
-		finishLine.draw(g);
 	}
 
-	public void setSpeed(int speed) {
+	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
 
@@ -85,19 +84,17 @@ public class River extends GameEntity {
 
 	@Override
 	public void update() {
-<<<<<<< Updated upstream
-		if (x == -1080) {
-=======
 		if (!initialised) {
 			initRace(0);
+			initialised = true;
 		}
 		if (x <= -1080) {
->>>>>>> Stashed changes
 			x = 0;
 		}
 		x -= speed;
 		playerX -= speed;
-		for (Obstacle o : obstacles) {
+		for (int i = 0; i < obstacles.size(); i++) {
+			Obstacle o = obstacles.get(i);
 			o.x = playerX + o.obstaclePositionX;
 		}
 		finishLine.x = playerX + finishLine.finishLinePositionX;
@@ -107,15 +104,11 @@ public class River extends GameEntity {
 		return obstacles;
 	}
 
-<<<<<<< Updated upstream
-	public FinishLine getFinishLine(){
-=======
 	public void removeObstacle(Obstacle obstacle) {
 		obstacles.remove(obstacle);
 	}
 
 	public FinishLine getFinishLine() {
->>>>>>> Stashed changes
 		return finishLine;
 	}
 }

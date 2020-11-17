@@ -13,6 +13,7 @@ public class RaceState extends GameState {
 
     public RaceState() {
         super();
+        boats = new ArrayList<Boat>();
         instantiateRiver();
     }
 
@@ -22,30 +23,24 @@ public class RaceState extends GameState {
 
     public void instantiateBoats(BoatType boatType) {
         int playerBoat = boatType.ordinal();
-
-        boats = new ArrayList<Boat>();
-
-<<<<<<< Updated upstream
-        boats.add(new Boat(1, 4, 1, 4, boatImages.get(0)));
-        boats.add(new Boat(2, 3, 2, 3, boatImages.get(1)));
-        boats.add(new Boat(3, 2, 3, 2, boatImages.get(2)));
-        boats.add(new Boat(4, 1, 4, 1, boatImages.get(3)));
-=======
+        boats.clear();
         boats.add(new Boat(4, 4, 20, 4, boatImages.get(0)));
         boats.add(new Boat(5, 3, 30, 3, boatImages.get(1)));
         boats.add(new Boat(4, 2, 40, 2, boatImages.get(2)));
-        boats.add(new Boat(5, 1, 50, 4, boatImages.get(3)));
->>>>>>> Stashed changes
+        boats.add(new Boat(5, 2, 50, 4, boatImages.get(3)));
 
         boats.get(playerBoat).setPlayerBoat();
         boats.get((7 + playerBoat) % 4).setOpponentBoat(1);
         boats.get((6 + playerBoat) % 4).setOpponentBoat(2);
         boats.get((5 + playerBoat) % 4).setOpponentBoat(3);
+
+        Game.instance.requestFocus();
     }
 
-    public void resetBoats() {
+    public void resetBoats(int raceNumber) {
         for (Boat boat : boats) {
             boat.resetPosition();
+            boat.increaseFatigue(raceNumber);
         }
     }
 
@@ -90,12 +85,14 @@ public class RaceState extends GameState {
     @Override
     public void update() {
         river.update();
+
         FinishLine fl = river.getFinishLine();
         for (Boat b : boats) {
             b.update();
             if (fl.collision(b)) {
                 GameStateManager.getInstance().setState(GameStateManager.ENDRACESTATE);
-                EndRaceState ers = (EndRaceState) GameStateManager.getInstance().getCurrentState();
+                EndRaceState ers = (EndRaceState) GameStateManager.getInstance()
+                        .getState(GameStateManager.ENDRACESTATE);
                 ers.nextRace = river.raceNumber + 1;
             }
         }

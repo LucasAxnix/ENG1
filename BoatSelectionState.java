@@ -65,8 +65,8 @@ public class BoatSelectionState extends GameState {
         selectBoat1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameStateManager.getInstance().setState(2);
                 setPlayerBoat(BoatType.GREEN);
+                GameStateManager.getInstance().setState(2);
             }
         });
 
@@ -75,8 +75,8 @@ public class BoatSelectionState extends GameState {
         selectBoat2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameStateManager.getInstance().setState(2);
                 setPlayerBoat(BoatType.RED);
+                GameStateManager.getInstance().setState(2);
             }
         });
 
@@ -85,8 +85,8 @@ public class BoatSelectionState extends GameState {
         selectBoat3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameStateManager.getInstance().setState(2);
                 setPlayerBoat(BoatType.LILAC);
+                GameStateManager.getInstance().setState(2);
             }
         });
 
@@ -95,14 +95,14 @@ public class BoatSelectionState extends GameState {
         selectBoat4Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameStateManager.getInstance().setState(2);
                 setPlayerBoat(BoatType.ORANGE);
+                GameStateManager.getInstance().setState(2);
             }
         });
     }
 
     private void setPlayerBoat(BoatType boatType) {
-        RaceState rs = (RaceState) (GameStateManager.getInstance().getCurrentState());
+        RaceState rs = (RaceState) (GameStateManager.getInstance().getState(GameStateManager.RACESTATE));
         rs.instantiateBoats(boatType);
     }
 

@@ -1,14 +1,14 @@
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-public class FinishLine extends GameEntity{
+public class FinishLine extends GameEntity {
 
 	int finishLinePositionX;
 
-    public FinishLine(int x, int y, BufferedImage sprite){
-		super(0,y,sprite);
+	public FinishLine(int x, int y, BufferedImage sprite) {
+		super(x, y, sprite);
 		finishLinePositionX = x;
-    }
+	}
 
 	@Override
 	public void draw(Graphics g) {
@@ -16,6 +16,7 @@ public class FinishLine extends GameEntity{
 	}
 
 	@Override
-	public void update() {}
+	public void update() {
+	}
 
 }

@@ -1,8 +1,6 @@
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.awt.Color;
 
 public class Boat extends GameEntity {
 	private int maxSpeed;
@@ -14,18 +12,21 @@ public class Boat extends GameEntity {
 	private float speed;
 	private River river;
 	private int startYPosition;
-	private int time;
+	private float timer;
 	private boolean finishedRace;
+	private int racePos;
+	private String name;
 
-	private Font timerFont = new Font("Verdana", Font.BOLD, 30);
 
-	public Boat(int maxSpeed, int acceleration, int durability, int maneuverability, BufferedImage sprite) {
+	public Boat(int maxSpeed, int acceleration, int durability, int maneuverability, BufferedImage sprite, String name) {
 		super(0, 0, sprite);
 		this.maxSpeed = maxSpeed;
 		this.acceleration = acceleration;
 		this.durability = durability;
 		this.maneuverability = maneuverability;
+		this.name = name;
 		boatHealth = 100;
+		timer = 0;
 	}
 
 	public Boat copyObject(Boat bt) {
@@ -36,9 +37,11 @@ public class Boat extends GameEntity {
 		return bt;
 	}
 
-	public void resetPosition() {
+	public void reset() {
 		x = 50;
 		y = startYPosition;
+		finishedRace = false;
+		timer = 0;
 	}
 
 	public void increaseFatigue(int raceNumber) {
@@ -58,11 +61,11 @@ public class Boat extends GameEntity {
 		startYPosition = y;
 	}
 
-	public void setOpponentBoat(int racePos) {
+	public void setOpponentBoat(int raceLane) {
 		RaceState rs = (RaceState) GameStateManager.getInstance().getState(GameStateManager.RACESTATE);
 		river = rs.getRiver();
 		x = 50;
-		switch (racePos) {
+		switch (raceLane) {
 			case 1:
 				y = 10;
 				break;
@@ -79,14 +82,6 @@ public class Boat extends GameEntity {
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(super.sprite, x, y, null);
-		if (isPlayer) {
-			g.fillRect(Game.WINDOW_WIDTH - 200, 0, 200, 50);
-			g.setColor(Color.red);
-			g.fillRect(Game.WINDOW_WIDTH - 200, 0, Math.max(0, boatHealth * 2), 50);
-			g.setFont(timerFont);
-			g.setColor(Color.black);
-			g.drawString(String.valueOf(time / Game.TICK_RATE), Game.WINDOW_WIDTH / 2, 0);
-		}
 	}
 
 	@Override
@@ -97,6 +92,9 @@ public class Boat extends GameEntity {
 		if (!isPlayer) {
 			x += speed - river.getSpeed();
 		} else {
+			if (y + sprite.getHeight() > Game.WINDOW_HEIGHT || y < 0) {
+				GameStateManager.getInstance().setState(GameStateManager.GAMEOVERSTATE);
+			}
 			river.setSpeed(speed);
 			ArrayList<Obstacle> obstacles = river.getObstacles();
 			for (int i = 0; i < obstacles.size(); i++) {
@@ -104,8 +102,7 @@ public class Boat extends GameEntity {
 					speed = 0;
 					river.removeObstacle(obstacles.get(i));
 					boatHealth -= durability;
-					if (boatHealth < 0) {
-
+					if (boatHealth <= 0) {
 						GameStateManager.getInstance().setState(GameStateManager.GAMEOVERSTATE);
 					}
 				}
@@ -121,6 +118,36 @@ public class Boat extends GameEntity {
 
 	private void increaseTimer() {
 		if (!finishedRace)
-			time++;
+			timer++;
+	}
+
+	public void finished(int racePos) {
+		if (finishedRace) return;
+		finishedRace = true;
+		this.racePos = racePos;
+	}
+
+	public boolean getFinished() {
+		return finishedRace;
+	}
+
+	public float getTimer() {
+		return (float)(timer / Game.TICK_RATE);
+	}
+
+	public int getPosition() {
+		return racePos;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public boolean isPlayer() {
+		return isPlayer;
+	}
+
+	public int getHealth() {
+		return boatHealth;
 	}
 }

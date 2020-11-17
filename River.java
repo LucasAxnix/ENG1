@@ -33,7 +33,7 @@ public class River extends GameEntity {
 			e.printStackTrace();
 		}
 		obstacles = new ArrayList<Obstacle>();
-		finishLine = new FinishLine(0, 0, null);
+		finishLine = new FinishLine(0, 0, finishLineImage);
 	}
 
 	public void initRace(int raceNumber) {

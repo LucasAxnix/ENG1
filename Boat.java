@@ -16,6 +16,7 @@ public class Boat extends GameEntity {
 	private boolean finishedRace;
 	private int racePos;
 	private String name;
+	private float[] raceTimes;
 
 
 	public Boat(int maxSpeed, int acceleration, int durability, int maneuverability, BufferedImage sprite, String name) {
@@ -27,6 +28,7 @@ public class Boat extends GameEntity {
 		this.name = name;
 		boatHealth = 100;
 		timer = 0;
+		raceTimes = new float[4];
 	}
 
 	public Boat copyObject(Boat bt) {
@@ -121,10 +123,11 @@ public class Boat extends GameEntity {
 			timer++;
 	}
 
-	public void finished(int racePos) {
+	public void finished(int racePos, int raceNumber) {
 		if (finishedRace) return;
 		finishedRace = true;
 		this.racePos = racePos;
+		raceTimes[raceNumber] = getTimer();
 	}
 
 	public boolean getFinished() {
@@ -149,5 +152,9 @@ public class Boat extends GameEntity {
 
 	public int getHealth() {
 		return boatHealth;
+	}
+
+	public float[] getRaceTimes(){
+		return raceTimes;
 	}
 }

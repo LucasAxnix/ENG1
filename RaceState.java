@@ -35,15 +35,16 @@ public class RaceState extends GameState {
     public void instantiateBoats(BoatType boatType) {
         playerBoatIndex = boatType.ordinal();
         boats.clear();
-        boats.add(new Boat(4, 4, 20, 4, boatImages.get(0), "Green"));
-        boats.add(new Boat(5, 3, 30, 3, boatImages.get(1), "Red"));
-        boats.add(new Boat(4, 2, 40, 2, boatImages.get(2), "Lilac"));
-        boats.add(new Boat(5, 2, 50, 4, boatImages.get(3), "Orange"));
+        /// ACTUAL BOATS
+        // boats.add(new Boat(4, 4, 20, 4, boatImages.get(0), "Green"));
+        // boats.add(new Boat(5, 3, 30, 3, boatImages.get(1), "Red"));
+        // boats.add(new Boat(4, 2, 40, 2, boatImages.get(2), "Lilac"));
+        // boats.add(new Boat(5, 2, 50, 4, boatImages.get(3), "Orange"));
         /// DEBUG BOATS
-        // boats.add(new Boat(16, 100, 0, 10, boatImages.get(0), "Green"));
-        // boats.add(new Boat(10, 100, 0, 10, boatImages.get(1), "Red"));
-        // boats.add(new Boat(10, 100, 0, 10, boatImages.get(2), "Lilac"));
-        // boats.add(new Boat(11, 100, 0, 10, boatImages.get(3), "Orange"));
+        boats.add(new Boat(16, 100, 0, 10, boatImages.get(0), "Green"));
+        boats.add(new Boat(10, 100, 0, 10, boatImages.get(1), "Red"));
+        boats.add(new Boat(10, 100, 0, 10, boatImages.get(2), "Lilac"));
+        boats.add(new Boat(11, 100, 0, 10, boatImages.get(3), "Orange"));
 
         boats.get(playerBoatIndex).setPlayerBoat();
         boats.get((7 + playerBoatIndex) % 4).setOpponentBoat(1);
@@ -58,6 +59,7 @@ public class RaceState extends GameState {
             boat.reset();
             boat.increaseFatigue(raceNumber);
         }
+        playerBoatFinished = false;
     }
 
     @Override
@@ -132,13 +134,17 @@ public class RaceState extends GameState {
         for (int i = 0; i < boats.size(); i++) {
             Boat b = boats.get(i);
             if (fl.collision(b)) {
-                b.finished(getBoatsFinished() + 1);
+                b.finished(getBoatsFinished() + 1, river.raceNumber);
+                EndRaceState ers = (EndRaceState) GameStateManager.getInstance().getState(GameStateManager.ENDRACESTATE);
+                ers.setResult(i, b.getTimer(), b.getPosition());
             }
             b.update();
         }
         if (isRaceFinished()) {
             nextRaceTimer--;
             if (nextRaceTimer <= 0) {
+                //TODO: put race results into end race state
+
                 GameStateManager.getInstance().setState(GameStateManager.ENDRACESTATE);
                 EndRaceState ers = (EndRaceState) GameStateManager.getInstance()
                         .getState(GameStateManager.ENDRACESTATE);

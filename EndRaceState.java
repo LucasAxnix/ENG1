@@ -5,30 +5,39 @@ import java.awt.*;
 import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.awt.Font;
 
 public class EndRaceState extends GameState {
     private BufferedImage background;
-    private BufferedImage table1;
-    private BufferedImage table2;
-    private BufferedImage table3;
-    private BufferedImage table4;
+    private float[][] times;
+    private int[][] results;
     private Icon startNewRace;
     private JButton nextRaceButton;
+    private BufferedImage[] tables;
+
+    private int[][] tablesPositions = {{50,50}, {710,50}, {50,420}, {710,420}};
+    private int[][] textOffests = {{60,80}, {60, 136}, {60,192}};
+    private String[] ordinals = {"1st", "2nd", "3rd", "4th"};
+
+    public static final Font RESULTS_FONT = new Font("Verdana", Font.BOLD, 30);
 
     public int nextRace = 0;
 
     public EndRaceState() {
         super();
+        times = new float[4][4];
+        results = new int[4][4];
     }
 
     @Override
     public void initImages() {
+        tables = new BufferedImage[4];
         try {
             background = ImageIO.read(getClass().getResource("/Resources/blue.png"));
-            table1 = ImageIO.read(getClass().getResource("/Resources/table.png"));
-            table2 = ImageIO.read(getClass().getResource("/Resources/table.png"));
-            table3 = ImageIO.read(getClass().getResource("/Resources/table.png"));
-            table4 = ImageIO.read(getClass().getResource("/Resources/table.png"));
+            tables[0] = ImageIO.read(getClass().getResource("/Resources/greenTable.png"));
+            tables[1] = ImageIO.read(getClass().getResource("/Resources/redTable.png"));
+            tables[2] = ImageIO.read(getClass().getResource("/Resources/lilacTable.png"));
+            tables[3] = ImageIO.read(getClass().getResource("/Resources/orangeTable.png"));
             startNewRace = new ImageIcon(getClass().getResource("/Resources/startNextRaceButton.png"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,10 +60,14 @@ public class EndRaceState extends GameState {
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, 0, 0, null);
-        g.drawImage(table1, 50, 50, null);
-        g.drawImage(table2, 680, 50, null);
-        g.drawImage(table3, 50, 420, null);
-        g.drawImage(table4, 680, 420, null);
+        g.setFont(RESULTS_FONT);
+        for (int i = 0; i < 4; i ++){
+            g.drawImage(tables[i], tablesPositions[i][0], tablesPositions[i][1], null);
+            for(int j = 0; j < nextRace; j ++){
+                g.drawString(String.format("%.2f", times[i][j]), tablesPositions[i][0] + textOffests[j][0] + 70, tablesPositions[i][1] + textOffests[j][1]);
+                g.drawString(ordinals[results[i][j]-1], tablesPositions[i][0] + textOffests[j][0], tablesPositions[i][1] + textOffests[j][1]);
+            }
+        }
     }
 
     @Override
@@ -70,6 +83,10 @@ public class EndRaceState extends GameState {
     @Override
     public void hideButtons() {
         Game.instance.remove(nextRaceButton);
+    }
 
+    public void setResult(int boatNumber, float time, int position){
+        times[boatNumber][nextRace] = time;
+        results[boatNumber][nextRace] = position;
     }
 }

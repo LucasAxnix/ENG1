@@ -5,7 +5,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 
-
 public class RaceState extends GameState {
 
     private ArrayList<BufferedImage> boatImages;
@@ -18,12 +17,12 @@ public class RaceState extends GameState {
     public static final Font TIMER_FONT = new Font("Verdana", Font.BOLD, 30);
     private static final Font LEADERBOARD_FONT = new Font("Verdana", Font.BOLD, 50);
 
-    public ArrayList<Boat> boats;
-    public int playerBoatIndex;
+    private ArrayList<Boat> boats;
+    private int playerBoatIndex;
 
     public RaceState() {
         super();
-        nextRaceTimer = (int)(4 * Game.TICK_RATE);
+        nextRaceTimer = (int) (4 * Game.TICK_RATE);
         boats = new ArrayList<Boat>();
         instantiateRiver();
     }
@@ -41,10 +40,10 @@ public class RaceState extends GameState {
         // boats.add(new Boat(4, 2, 40, 2, boatImages.get(2), "Lilac"));
         // boats.add(new Boat(5, 2, 50, 4, boatImages.get(3), "Orange"));
         /// DEBUG BOATS
-        boats.add(new Boat(16, 100, 0, 10, boatImages.get(0), "Green"));
+        boats.add(new Boat(10, 100, 0, 10, boatImages.get(0), "Green"));
         boats.add(new Boat(10, 100, 0, 10, boatImages.get(1), "Red"));
         boats.add(new Boat(10, 100, 0, 10, boatImages.get(2), "Lilac"));
-        boats.add(new Boat(11, 100, 0, 10, boatImages.get(3), "Orange"));
+        boats.add(new Boat(10, 100, 0, 10, boatImages.get(3), "Orange"));
 
         boats.get(playerBoatIndex).setPlayerBoat();
         boats.get((7 + playerBoatIndex) % 4).setOpponentBoat(1);
@@ -60,6 +59,7 @@ public class RaceState extends GameState {
             boat.increaseFatigue(raceNumber);
         }
         playerBoatFinished = false;
+        nextRaceTimer = (int) (4 * Game.TICK_RATE);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class RaceState extends GameState {
                     int timeXPos = Game.WINDOW_WIDTH / 2 + 10;
                     int timeYPos = b.getPosition() * (Game.WINDOW_HEIGHT / 8) + Game.WINDOW_HEIGHT / 4 - 10;
                     g.drawString(b.getName(), nameXPos, nameYPos);
-                    g.drawString(String.format("%.2f", b.getTimer()), timeXPos, timeYPos);
+                    g.drawString(String.format("%.2f", b.getFinalTime()), timeXPos, timeYPos);
                 }
             }
         }
@@ -85,10 +85,13 @@ public class RaceState extends GameState {
         Boat playerBoat = boats.get(playerBoatIndex);
         if (playerBoat.isPlayer()) {
             g.setColor(Color.black);
-            if (!playerBoatFinished)  {
+            if (!playerBoatFinished) {
                 g.setFont(RaceState.TIMER_FONT);
                 String timer = String.format("%.2f", playerBoat.getTimer());
-                g.drawString(timer, Game.WINDOW_WIDTH / 2 - timer.length() * RaceState.TIMER_FONT.getSize() / 2, 30);
+                String penalty = String.format("%.2f", playerBoat.getPenalty());
+                g.drawString(timer, Game.WINDOW_WIDTH / 2 - 50, 30);
+                g.setColor(Color.red);
+                g.drawString("+ " + penalty, Game.WINDOW_WIDTH / 2 + 50, 30);
             }
             g.fillRect(Game.WINDOW_WIDTH - 200, 0, 200, 50);
             g.setColor(Color.red);
@@ -97,18 +100,22 @@ public class RaceState extends GameState {
         if (isRaceFinished()) {
             g.setFont(TIMER_FONT);
             g.setColor(Color.black);
-            g.drawString((int)(nextRaceTimer / Game.TICK_RATE) + "...", Game.WINDOW_WIDTH / 2, Game.WINDOW_HEIGHT / 4 * 3 + 50);
+            g.drawString((int) (nextRaceTimer / Game.TICK_RATE) + "...", Game.WINDOW_WIDTH / 2,
+                    Game.WINDOW_HEIGHT / 4 * 3 + 50);
         }
     }
 
     @Override
-    public void hideButtons() {}
+    public void hideButtons() {
+    }
 
     @Override
-    public void initButtons() {}
+    public void initButtons() {
+    }
 
     @Override
-    public void showButtons() {}
+    public void showButtons() {
+    }
 
     @Override
     public void initImages() {
@@ -135,20 +142,27 @@ public class RaceState extends GameState {
             Boat b = boats.get(i);
             if (fl.collision(b)) {
                 b.finished(getBoatsFinished() + 1, river.raceNumber);
-                EndRaceState ers = (EndRaceState) GameStateManager.getInstance().getState(GameStateManager.ENDRACESTATE);
-                ers.setResult(i, b.getTimer(), b.getPosition());
+                EndRaceState ers = (EndRaceState) GameStateManager.getInstance()
+                        .getState(GameStateManager.ENDRACESTATE);
+                ers.setResult(i, b.getFinalTime(), b.getPosition());
             }
             b.update();
         }
         if (isRaceFinished()) {
             nextRaceTimer--;
             if (nextRaceTimer <= 0) {
-                //TODO: put race results into end race state
-
-                GameStateManager.getInstance().setState(GameStateManager.ENDRACESTATE);
-                EndRaceState ers = (EndRaceState) GameStateManager.getInstance()
-                        .getState(GameStateManager.ENDRACESTATE);
-                ers.nextRace = river.raceNumber + 1;
+                // TODO: put race results into end race state
+                if (river.raceNumber < 3) {
+                    GameStateManager.getInstance().setState(GameStateManager.ENDRACESTATE);
+                    EndRaceState ers = (EndRaceState) GameStateManager.getInstance()
+                            .getState(GameStateManager.ENDRACESTATE);
+                    ers.nextRace = river.raceNumber + 1;
+                } else {
+                    GameStateManager.getInstance().setState(GameStateManager.PODIUMSTATE);
+                    PodiumState ps = (PodiumState) GameStateManager.getInstance()
+                            .getState(GameStateManager.PODIUMSTATE);
+                    ps.finalPositions();
+                }
             }
         }
     }
@@ -176,6 +190,10 @@ public class RaceState extends GameState {
 
     private boolean isRaceFinished() {
         return getBoatsFinished() == 4;
+    }
+
+    public ArrayList<Boat> getBoats() {
+        return boats;
     }
 }
 

@@ -6,7 +6,7 @@ public class Obstacle extends GameEntity {
     int obstaclePositionX;
 
     public Obstacle(int x, int y, BufferedImage sprite) {
-        super(0, y, sprite);
+        super(x, y, sprite);
         obstaclePositionX = x;
     }
 

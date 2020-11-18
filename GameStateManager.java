@@ -21,6 +21,7 @@ public class GameStateManager {
         gameStateList.add(new RaceState());
         gameStateList.add(new EndRaceState());
         gameStateList.add(new GameOverState());
+        gameStateList.add(new PodiumState());
     }
 
     public GameState getState(int state) {

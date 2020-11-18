@@ -13,13 +13,13 @@ public class Boat extends GameEntity {
 	private River river;
 	private int startYPosition;
 	private float timer;
+	private float penalty;
 	private boolean finishedRace;
 	private int racePos;
 	private String name;
-	private float[] raceTimes;
 
-
-	public Boat(int maxSpeed, int acceleration, int durability, int maneuverability, BufferedImage sprite, String name) {
+	public Boat(int maxSpeed, int acceleration, int durability, int maneuverability, BufferedImage sprite,
+			String name) {
 		super(0, 0, sprite);
 		this.maxSpeed = maxSpeed;
 		this.acceleration = acceleration;
@@ -28,7 +28,6 @@ public class Boat extends GameEntity {
 		this.name = name;
 		boatHealth = 100;
 		timer = 0;
-		raceTimes = new float[4];
 	}
 
 	public Boat copyObject(Boat bt) {
@@ -44,6 +43,7 @@ public class Boat extends GameEntity {
 		y = startYPosition;
 		finishedRace = false;
 		timer = 0;
+		penalty = 0;
 	}
 
 	public void increaseFatigue(int raceNumber) {
@@ -55,6 +55,7 @@ public class Boat extends GameEntity {
 	}
 
 	public void setPlayerBoat() {
+		finishedRace = false;
 		this.isPlayer = true;
 		RaceState rs = (RaceState) GameStateManager.getInstance().getState(GameStateManager.RACESTATE);
 		river = rs.getRiver();
@@ -64,6 +65,7 @@ public class Boat extends GameEntity {
 	}
 
 	public void setOpponentBoat(int raceLane) {
+		finishedRace = false;
 		RaceState rs = (RaceState) GameStateManager.getInstance().getState(GameStateManager.RACESTATE);
 		river = rs.getRiver();
 		x = 50;
@@ -97,6 +99,9 @@ public class Boat extends GameEntity {
 			if (y + sprite.getHeight() > Game.WINDOW_HEIGHT || y < 0) {
 				GameStateManager.getInstance().setState(GameStateManager.GAMEOVERSTATE);
 			}
+			if ((y + sprite.getHeight() > 574 || y < 72) && !finishedRace) {
+				penalty++;
+			}
 			river.setSpeed(speed);
 			ArrayList<Obstacle> obstacles = river.getObstacles();
 			for (int i = 0; i < obstacles.size(); i++) {
@@ -124,10 +129,10 @@ public class Boat extends GameEntity {
 	}
 
 	public void finished(int racePos, int raceNumber) {
-		if (finishedRace) return;
+		if (finishedRace)
+			return;
 		finishedRace = true;
 		this.racePos = racePos;
-		raceTimes[raceNumber] = getTimer();
 	}
 
 	public boolean getFinished() {
@@ -135,7 +140,11 @@ public class Boat extends GameEntity {
 	}
 
 	public float getTimer() {
-		return (float)(timer / Game.TICK_RATE);
+		return (float) (timer / Game.TICK_RATE);
+	}
+
+	public float getFinalTime() {
+		return (float) ((timer + penalty) / Game.TICK_RATE);
 	}
 
 	public int getPosition() {
@@ -154,7 +163,7 @@ public class Boat extends GameEntity {
 		return boatHealth;
 	}
 
-	public float[] getRaceTimes(){
-		return raceTimes;
+	public float getPenalty() {
+		return (float) (penalty / Game.TICK_RATE);
 	}
 }

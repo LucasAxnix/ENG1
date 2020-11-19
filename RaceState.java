@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
-import java.util.Random;
 
 public class RaceState extends GameState {
 
@@ -24,10 +23,8 @@ public class RaceState extends GameState {
     public RaceState() {
         super();
         nextRaceTimer = (int) (4 * Game.TICK_RATE);
-        
         boats = new ArrayList<Boat>();
         instantiateRiver();
-        
     }
 
     public void instantiateRiver() {
@@ -43,10 +40,10 @@ public class RaceState extends GameState {
         // boats.add(new Boat(4, 2, 40, 2, boatImages.get(2), "Lilac"));
         // boats.add(new Boat(5, 2, 50, 4, boatImages.get(3), "Orange"));
         /// DEBUG BOATS
-        boats.add(new Boat(10, 100, 5, 5, boatImages.get(0), "Green"));
-        boats.add(new Boat(13, 130, 5, 4, boatImages.get(1), "Red"));
-        boats.add(new Boat(15, 160, 5, 3, boatImages.get(2), "Lilac"));
-        boats.add(new Boat(20, 150, 5, 2, boatImages.get(3), "Orange"));
+        boats.add(new Boat(10, 100, 0, 10, boatImages.get(0), "Green"));
+        boats.add(new Boat(10, 100, 0, 10, boatImages.get(1), "Red"));
+        boats.add(new Boat(10, 100, 0, 10, boatImages.get(2), "Lilac"));
+        boats.add(new Boat(10, 100, 0, 10, boatImages.get(3), "Orange"));
 
         boats.get(playerBoatIndex).setPlayerBoat();
         boats.get((7 + playerBoatIndex) % 4).setOpponentBoat(1);
@@ -59,7 +56,6 @@ public class RaceState extends GameState {
     public void resetBoats(int raceNumber) {
         for (Boat boat : boats) {
             boat.reset();
-            
             boat.increaseFatigue(raceNumber);
         }
         playerBoatFinished = false;
@@ -96,10 +92,10 @@ public class RaceState extends GameState {
                 g.drawString(timer, Game.WINDOW_WIDTH / 2 - 50, 30);
                 g.setColor(Color.red);
                 g.drawString("+ " + penalty, Game.WINDOW_WIDTH / 2 + 50, 30);
-                g.fillRect(Game.WINDOW_WIDTH - 200, 0, Math.max(0, playerBoat.getHealth() * 2), 50);
-                g.setColor(Color.red);
-    
             }
+            g.fillRect(Game.WINDOW_WIDTH - 200, 0, 200, 50);
+            g.setColor(Color.red);
+            g.fillRect(Game.WINDOW_WIDTH - 200, 0, Math.max(0, playerBoat.getHealth() * 2), 50);
         }
         if (isRaceFinished()) {
             g.setFont(TIMER_FONT);

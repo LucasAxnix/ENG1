@@ -1,14 +1,12 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-
 public class InputManager implements KeyListener {
 
     private static boolean up;
     private static boolean down;
     private static boolean left;
     private static boolean right;
-    private static int speed_up = 0;
 
     private static InputManager instance;
 
@@ -36,8 +34,6 @@ public class InputManager implements KeyListener {
             down = true;
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
             right = true;
-        }else if (e.getKeyCode() == KeyEvent.VK_SPACE){
-            speed_up =10;
         }
     }
 
@@ -51,8 +47,6 @@ public class InputManager implements KeyListener {
             down = false;
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
             right = false;
-        }else if (e.getKeyCode() == KeyEvent.VK_SPACE){
-            speed_up =0;
         }
     }
 
@@ -71,10 +65,6 @@ public class InputManager implements KeyListener {
     public boolean getRight() {
         return right;
     }
-
-    public int get_new_speed(){
-        return speed_up;
-    }// return the new speed_up given by the user.
 
     @Override
     public void keyTyped(KeyEvent e) {}

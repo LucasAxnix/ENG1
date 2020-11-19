@@ -26,7 +26,7 @@ public class Boat extends GameEntity {
 		this.durability = durability;
 		this.maneuverability = maneuverability;
 		this.name = name;
-		boatHealth = 100;
+		boatHealth = 100; // a reansonable number
 		timer = 0;
 	}
 
@@ -44,6 +44,7 @@ public class Boat extends GameEntity {
 		finishedRace = false;
 		timer = 0;
 		penalty = 0;
+		speed = 0;
 	}
 
 	public void increaseFatigue(int raceNumber) {
@@ -66,6 +67,7 @@ public class Boat extends GameEntity {
 
 	public void setOpponentBoat(int raceLane) {
 		finishedRace = false;
+		this.isPlayer = false;
 		RaceState rs = (RaceState) GameStateManager.getInstance().getState(GameStateManager.RACESTATE);
 		river = rs.getRiver();
 		x = 50;
@@ -91,11 +93,12 @@ public class Boat extends GameEntity {
 	@Override
 	public void update() {
 		increaseTimer();
-		speed += acceleration * 0.05f;
-		speed = Math.min(speed, maxSpeed);
 		if (!isPlayer) {
+			speed += acceleration *0.05f;
+			speed = Math.min(speed, maxSpeed);
 			x += speed - river.getSpeed();
 		} else {
+			speed += InputManager.getInstance().get_new_speed()*0.03f;
 			if (y + sprite.getHeight() > Game.WINDOW_HEIGHT || y < 0) {
 				GameStateManager.getInstance().setState(GameStateManager.GAMEOVERSTATE);
 			}
@@ -115,10 +118,10 @@ public class Boat extends GameEntity {
 				}
 			}
 			if (InputManager.getInstance().getUp()) {
-				y -= 1;
+				y -= maneuverability;
 			}
 			if (InputManager.getInstance().getDown()) {
-				y += 1;
+				y += maneuverability;
 			}
 		}
 	}
@@ -134,7 +137,7 @@ public class Boat extends GameEntity {
 		finishedRace = true;
 		this.racePos = racePos;
 	}
-
+//
 	public boolean getFinished() {
 		return finishedRace;
 	}

@@ -93,27 +93,34 @@ public class Boat extends GameEntity {
 		increaseTimer();
 		speed += acceleration * 0.05f;
 		speed = Math.min(speed, maxSpeed);
-		if (!isPlayer) {
-			x += speed - river.getSpeed();
-		} else {
-			if (y + sprite.getHeight() > Game.WINDOW_HEIGHT || y < 0) {
-				GameStateManager.getInstance().setState(GameStateManager.GAMEOVERSTATE);
-			}
-			if ((y + sprite.getHeight() > 574 || y < 72) && !finishedRace) {
-				penalty++;
-			}
-			river.setSpeed(speed);
-			ArrayList<Obstacle> obstacles = river.getObstacles();
-			for (int i = 0; i < obstacles.size(); i++) {
-				if (collision(obstacles.get(i))) {
-					speed = 0;
-					river.removeObstacle(obstacles.get(i));
+
+		ArrayList<Obstacle> obstacles = river.getObstacles();
+		for (int i = 0; i < obstacles.size(); i++) {
+			if (collision(obstacles.get(i))) {
+				if (isPlayer) {
 					boatHealth -= durability;
 					if (boatHealth <= 0) {
 						GameStateManager.getInstance().setState(GameStateManager.GAMEOVERSTATE);
 					}
 				}
+				speed = 0;
+				river.removeObstacle(obstacles.get(i));
 			}
+		}
+
+		if (!isPlayer) {
+			x += speed - river.getSpeed();
+		} else {
+			if (!finishedRace) {
+				if (y + sprite.getHeight() > Game.WINDOW_HEIGHT || y < 0) {
+					GameStateManager.getInstance().setState(GameStateManager.GAMEOVERSTATE);
+				}
+				if (y + sprite.getHeight() > 574 || y < 72) {
+					penalty++;
+				}
+			}
+			river.setSpeed(speed);
+
 			if (InputManager.getInstance().getUp()) {
 				y -= 1;
 			}
@@ -128,11 +135,10 @@ public class Boat extends GameEntity {
 			timer++;
 	}
 
-	public void finished(int racePos, int raceNumber) {
+	public void finished() {
 		if (finishedRace)
 			return;
 		finishedRace = true;
-		this.racePos = racePos;
 	}
 
 	public boolean getFinished() {
@@ -149,6 +155,10 @@ public class Boat extends GameEntity {
 
 	public int getPosition() {
 		return racePos;
+	}
+
+	public void setPosition(int racePos) {
+		this.racePos = racePos;
 	}
 
 	public String getName() {

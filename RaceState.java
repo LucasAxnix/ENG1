@@ -141,17 +141,18 @@ public class RaceState extends GameState {
         for (int i = 0; i < boats.size(); i++) {
             Boat b = boats.get(i);
             if (fl.collision(b)) {
-                b.finished(getBoatsFinished() + 1, river.raceNumber);
+                b.finished(river.raceNumber);
+                sortTimes();
                 EndRaceState ers = (EndRaceState) GameStateManager.getInstance()
                         .getState(GameStateManager.ENDRACESTATE);
                 ers.setResult(i, b.getFinalTime(), b.getPosition());
+                
             }
             b.update();
         }
         if (isRaceFinished()) {
             nextRaceTimer--;
             if (nextRaceTimer <= 0) {
-                // TODO: put race results into end race state
                 if (river.raceNumber < 3) {
                     GameStateManager.getInstance().setState(GameStateManager.ENDRACESTATE);
                     EndRaceState ers = (EndRaceState) GameStateManager.getInstance()
@@ -194,6 +195,20 @@ public class RaceState extends GameState {
 
     public ArrayList<Boat> getBoats() {
         return boats;
+    }
+    
+    private void sortTimes() {
+        int pos = 1;
+        for (Boat b1 : boats) {
+            pos = 1;
+            for (Boat b2 : boats) {
+                if (b1 == b2 || !b2.getFinished()) continue;
+                if (b2.getFinalTime() < b1.getFinalTime()) {
+                    pos++;
+                }
+            }
+            b1.setPosition(pos);
+        }
     }
 }
 

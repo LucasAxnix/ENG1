@@ -7,7 +7,7 @@ public class Game extends JPanel implements Runnable {
     public JFrame window;
     public static final int WINDOW_WIDTH = 1080;
     public static final int WINDOW_HEIGHT = 720;
-    public static final double TICK_RATE = 60;
+    public static final float TICK_RATE = 144;
     public static Game instance;
 
     public static void main(String[] args) {

@@ -35,15 +35,15 @@ public class RaceState extends GameState {
         playerBoatIndex = boatType.ordinal();
         boats.clear();
         /// ACTUAL BOATS
-        // boats.add(new Boat(4, 4, 20, 4, boatImages.get(0), "Green"));
-        // boats.add(new Boat(5, 3, 30, 3, boatImages.get(1), "Red"));
-        // boats.add(new Boat(4, 2, 40, 2, boatImages.get(2), "Lilac"));
-        // boats.add(new Boat(5, 2, 50, 4, boatImages.get(3), "Orange"));
+        boats.add(new Boat(8, 4, 5, 10, boatImages.get(0), "Green")); // dur
+        boats.add(new Boat(9, 3, 8, 15, boatImages.get(1), "Red")); // man
+        boats.add(new Boat(7, 8, 9, 10, boatImages.get(2), "Lilac")); // acc
+        boats.add(new Boat(11, 3, 10, 10, boatImages.get(3), "Orange")); // speed
         /// DEBUG BOATS
-        boats.add(new Boat(10, 100, 0, 10, boatImages.get(0), "Green"));
-        boats.add(new Boat(10, 100, 0, 10, boatImages.get(1), "Red"));
-        boats.add(new Boat(10, 100, 0, 10, boatImages.get(2), "Lilac"));
-        boats.add(new Boat(10, 100, 0, 10, boatImages.get(3), "Orange"));
+        // boats.add(new Boat(10, 100, 0, 10, boatImages.get(0), "Green"));
+        // boats.add(new Boat(10, 100, 0, 10, boatImages.get(1), "Red"));
+        // boats.add(new Boat(10, 100, 0, 10, boatImages.get(2), "Lilac"));
+        // boats.add(new Boat(10, 100, 0, 10, boatImages.get(3), "Orange"));
 
         boats.get(playerBoatIndex).setPlayerBoat();
         boats.get((7 + playerBoatIndex) % 4).setOpponentBoat(1);
@@ -83,7 +83,6 @@ public class RaceState extends GameState {
             b.draw(g);
         }
         Boat playerBoat = boats.get(playerBoatIndex);
-        if (playerBoat.isPlayer()) {
             g.setColor(Color.black);
             if (!playerBoatFinished) {
                 g.setFont(RaceState.TIMER_FONT);
@@ -92,11 +91,11 @@ public class RaceState extends GameState {
                 g.drawString(timer, Game.WINDOW_WIDTH / 2 - 50, 30);
                 g.setColor(Color.red);
                 g.drawString("+ " + penalty, Game.WINDOW_WIDTH / 2 + 50, 30);
+                g.setColor(Color.black);
+                g.fillRect(Game.WINDOW_WIDTH - 200, 0, 200, 50);
+                g.setColor(Color.red);
+                g.fillRect(Game.WINDOW_WIDTH - 200, 0, Math.max(0, playerBoat.getHealth() * 2), 50);
             }
-            g.fillRect(Game.WINDOW_WIDTH - 200, 0, 200, 50);
-            g.setColor(Color.red);
-            g.fillRect(Game.WINDOW_WIDTH - 200, 0, Math.max(0, playerBoat.getHealth() * 2), 50);
-        }
         if (isRaceFinished()) {
             g.setFont(TIMER_FONT);
             g.setColor(Color.black);
@@ -141,7 +140,7 @@ public class RaceState extends GameState {
         for (int i = 0; i < boats.size(); i++) {
             Boat b = boats.get(i);
             if (fl.collision(b)) {
-                b.finished(river.raceNumber);
+                b.finished();
                 sortTimes();
                 EndRaceState ers = (EndRaceState) GameStateManager.getInstance()
                         .getState(GameStateManager.ENDRACESTATE);
@@ -198,14 +197,23 @@ public class RaceState extends GameState {
     }
     
     private void sortTimes() {
-        int pos = 1;
+        int pos = 4;
         for (Boat b1 : boats) {
-            pos = 1;
+            if (!b1.getFinished()) continue;
+            pos = 4;
             for (Boat b2 : boats) {
-                if (b1 == b2 || !b2.getFinished()) continue;
-                if (b2.getFinalTime() < b1.getFinalTime()) {
-                    pos++;
+                if (b1 == b2) continue;
+                if (!b2.getFinished()) {
+                    pos--;
                 }
+                else if (b2.getFinalTime() > b1.getFinalTime()) {
+                    pos--;
+                } else if (b2.getFinalTime() == b1.getFinalTime()) {
+                    if (boats.indexOf(b1) < boats.indexOf(b2)) {
+                        pos--;
+                    }
+                }
+                
             }
             b1.setPosition(pos);
         }

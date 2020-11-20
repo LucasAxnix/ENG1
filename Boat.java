@@ -3,8 +3,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Boat extends GameEntity {
-	private int maxSpeed;
-	private int acceleration;
+	private float maxSpeed;
+	private float acceleration;
 	private int durability;
 	private int maneuverability;
 	private boolean isPlayer;
@@ -12,13 +12,13 @@ public class Boat extends GameEntity {
 	private float speed;
 	private River river;
 	private int startYPosition;
-	private float timer;
-	private float penalty;
+	private int timer;
+	private int penalty;
 	private boolean finishedRace;
 	private int racePos;
 	private String name;
 
-	public Boat(int maxSpeed, int acceleration, int durability, int maneuverability, BufferedImage sprite,
+	public Boat(float maxSpeed, float acceleration, int durability, int maneuverability, BufferedImage sprite,
 			String name) {
 		super(0, 0, sprite);
 		this.maxSpeed = maxSpeed;
@@ -44,13 +44,14 @@ public class Boat extends GameEntity {
 		finishedRace = false;
 		timer = 0;
 		penalty = 0;
+		speed = 0;
 	}
 
 	public void increaseFatigue(int raceNumber) {
 		if (raceNumber > 0) {
-			maxSpeed *= 0.8f;
-			acceleration *= 0.8f;
-			maneuverability *= 0.8f;
+			maxSpeed *= 0.9f;
+			acceleration *= 0.9f;
+			maneuverability *= 0.9f;
 		}
 	}
 
@@ -91,7 +92,7 @@ public class Boat extends GameEntity {
 	@Override
 	public void update() {
 		increaseTimer();
-		speed += acceleration * 0.05f;
+		speed += acceleration * 0.01f;
 		speed = Math.min(speed, maxSpeed);
 
 		ArrayList<Obstacle> obstacles = river.getObstacles();
@@ -103,7 +104,7 @@ public class Boat extends GameEntity {
 						GameStateManager.getInstance().setState(GameStateManager.GAMEOVERSTATE);
 					}
 				}
-				speed = 0;
+				speed = maxSpeed / 4f;
 				river.removeObstacle(obstacles.get(i));
 			}
 		}
@@ -146,11 +147,15 @@ public class Boat extends GameEntity {
 	}
 
 	public float getTimer() {
-		return (float) (timer / Game.TICK_RATE);
+		return timer / Game.TICK_RATE;
 	}
 
 	public float getFinalTime() {
-		return (float) ((timer + penalty) / Game.TICK_RATE);
+		return (timer + penalty) / Game.TICK_RATE;
+	}
+
+	public int getFinalIntegerTime() {
+		return timer + penalty;
 	}
 
 	public int getPosition() {

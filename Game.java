@@ -1,7 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class Game extends JPanel implements Runnable {
+public class Game extends JPanel {
     private boolean isGameRunning = false;
     private boolean initialised = false;
     public JFrame window;
@@ -12,11 +12,13 @@ public class Game extends JPanel implements Runnable {
 
     public static void main(String[] args) {
         instance = new Game();
-        Thread thread = new Thread(instance);
-        thread.start();
+        instance.start();
     }
 
-    public void run() {
+    /**
+     * initialises the game window and starts the game loop
+     */
+    public void start() {
         instance.isGameRunning = true;
         setupWindow();
         initialised = true;
@@ -24,6 +26,9 @@ public class Game extends JPanel implements Runnable {
         instance.update();
     }
 
+    /**
+     * initialises the window
+     */
     private void setupWindow() {
         window = new JFrame("Game name");
 
@@ -35,6 +40,11 @@ public class Game extends JPanel implements Runnable {
         window.setVisible(true);
     }
 
+    /**
+     * calls draw in GameStateManager once the window is initialised
+     * 
+     * @param g the graphics object to draw to
+     */
     @Override
     public void paintComponent(Graphics g) {
         if (initialised) {
@@ -42,6 +52,12 @@ public class Game extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * the main game loop
+     * <p>
+     * starts the update loop, it will continue to run until isGameRunning is set to false.
+     * calls draw as frequently as possible and calls tick TICK_RATE times per second
+     */
     public void update() {
         long lastTime = System.nanoTime();
         double ns = 1000000000 / TICK_RATE;
@@ -72,6 +88,9 @@ public class Game extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * calls tick in GameStateManager
+     */
     private void tick() {
         GameStateManager.getInstance().update();
     }

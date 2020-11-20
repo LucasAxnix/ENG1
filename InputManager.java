@@ -7,13 +7,13 @@ public class InputManager implements KeyListener {
     private static boolean down;
     private static boolean left;
     private static boolean right;
-
     private static InputManager instance;
 
-    private InputManager() {
-
-    }
-
+    /**
+     * gets the singleton instance of InputManager
+     * 
+     * @return the singleton instance of InputManager
+     */
     public static InputManager getInstance() {
         if (instance == null) {
             instance = new InputManager();
@@ -24,6 +24,9 @@ public class InputManager implements KeyListener {
         return instance;
     }
 
+    /**
+     * sets the movement input to true when a key is pressed
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_W) {
@@ -37,6 +40,9 @@ public class InputManager implements KeyListener {
         }
     }
 
+    /**
+     * sets the movement input to false when a key is released
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_W) {
@@ -49,19 +55,39 @@ public class InputManager implements KeyListener {
             right = false;
         }
     }
-
+    
+    /**
+     * gets the up input
+     * 
+     * @return the up input
+     */
     public boolean getUp() {
         return up;
     }
 
+    /**
+     * gets the up input
+     * 
+     * @return the down input
+     */
     public boolean getDown() {
         return down;
     }
 
+    /**
+     * gets the up input
+     * 
+     * @return the left input
+     */
     public boolean getLeft() {
         return left;
     }
 
+    /**
+     * gets the up input
+     * 
+     * @return the right input
+     */
     public boolean getRight() {
         return right;
     }

@@ -23,12 +23,18 @@ public class EndRaceState extends GameState {
 
     public int nextRace = 0;
 
+    /**
+     * EndRaceState constructor
+     */
     public EndRaceState() {
         super();
         times = new float[4][4];
         results = new int[4][4];
     }
 
+    /**
+     * initialises the images for the end race state
+     */
     @Override
     public void initImages() {
         tables = new BufferedImage[4];
@@ -44,6 +50,9 @@ public class EndRaceState extends GameState {
         }
     }
 
+    /**
+     * initialises the buttons for the end race state
+     */
     @Override
     public void initButtons() {
         nextRaceButton = new JButton(startNewRace);
@@ -57,6 +66,11 @@ public class EndRaceState extends GameState {
         });
     }
 
+    /**
+     * draws the content for the end race state to the panel
+     * 
+     * @param g the graphics object to draw to
+     */
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, 0, 0, null);
@@ -71,21 +85,32 @@ public class EndRaceState extends GameState {
     }
 
     @Override
-    public void update() {
+    public void update() {}
 
-    }
-
+    /**
+     * adds the buttons to the panel
+     */
     @Override
     public void showButtons() {
         Game.instance.add(nextRaceButton);
     }
 
+    /**
+     * removes buttons from the panel
+     */
     @Override
     public void hideButtons() {
         Game.instance.remove(nextRaceButton);
     }
 
-    public void setResult(int boatNumber, float time, int position){
+    /**
+     * sets the results for the specified boat
+     * 
+     * @param boatNumber the boat number in the array
+     * @param time the time the boat got in the last race
+     * @param position the position the boat ranks out of the other boats
+     */
+    public void setResult(int boatNumber, float time, int position) {
         times[boatNumber][nextRace] = time;
         results[boatNumber][nextRace] = position;
     }

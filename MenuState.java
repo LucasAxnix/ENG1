@@ -11,10 +11,9 @@ public class MenuState extends GameState {
     private Icon startGame;
     private JButton startButton;
 
-    public MenuState() {
-        super();
-    }
-
+    /**
+     * initialises the images
+     */
     @Override
     public void initImages() {
         try {
@@ -25,6 +24,9 @@ public class MenuState extends GameState {
         }
     }
 
+    /**
+     * initialises the buttons
+     */
     @Override
     public void initButtons() {
         startButton = new JButton(startGame);
@@ -36,20 +38,28 @@ public class MenuState extends GameState {
         });
     }
 
+    /**
+     * draws the content for the menu state
+     */
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, 0, 0, null);
     }
 
     @Override
-    public void update() {
-    }
+    public void update() {}
 
+    /**
+     * adds the buttons to the panel
+     */
     @Override
     public void showButtons() {
         Game.instance.add(startButton);
     }
 
+    /**
+     * removes the buttons from the panel
+     */
     @Override
     public void hideButtons() {
         Game.instance.remove(startButton);

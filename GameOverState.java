@@ -11,10 +11,9 @@ public class GameOverState extends GameState {
     private BufferedImage background;
     private Icon restart;
 
-    public GameOverState() {
-        super();
-    }
-
+    /**
+     * initialies the buttons for the game over state
+     */
     @Override
     public void initButtons() {
         restartButton = new JButton(restart);
@@ -28,6 +27,9 @@ public class GameOverState extends GameState {
         });
     }
 
+    /**
+     * initialises the images for the game over state
+     */
     @Override
     public void initImages() {
         try {
@@ -37,24 +39,33 @@ public class GameOverState extends GameState {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * draws the content for the game over state
+     * 
+     * @param g the graphics object to draw to
+     */
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, 0, 0, null);
     }
 
+    /**
+     * adds the buttons to the panel
+     */
     @Override
     public void showButtons() {
         Game.instance.add(restartButton);
     }
 
+    /**
+     * removes the buttons from the panel
+     */
     @Override
     public void hideButtons() {
         Game.instance.remove(restartButton);
     }
 
     @Override
-    public void update() {
-    }
-
+    public void update() {}
 }

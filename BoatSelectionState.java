@@ -25,10 +25,9 @@ public class BoatSelectionState extends GameState {
     private JButton selectBoat3Button;
     private JButton selectBoat4Button;
 
-    public BoatSelectionState() {
-        super();
-    }
-
+    /**
+     * initialises the images for the boat selection state
+     */
     @Override
     public void initImages() {
         try {
@@ -49,6 +48,9 @@ public class BoatSelectionState extends GameState {
         }
     }
 
+    /**
+     * initialises the buttons for the selection state
+     */
     @Override
     public void initButtons() {
         backButton = new JButton(back);
@@ -101,11 +103,19 @@ public class BoatSelectionState extends GameState {
         });
     }
 
+    /**
+     * sets the player's boat
+     * 
+     * @param boatType the boat type the player has selected
+     */
     private void setPlayerBoat(BoatType boatType) {
         RaceState rs = (RaceState) (GameStateManager.getInstance().getState(GameStateManager.RACESTATE));
         rs.instantiateBoats(boatType);
     }
 
+    /**
+     * adds the buttons to the panel
+     */
     @Override
     public void showButtons() {
         Game.instance.add(selectBoat1Button);
@@ -115,6 +125,9 @@ public class BoatSelectionState extends GameState {
         Game.instance.add(backButton);
     }
 
+    /**
+     * removes the buttons from the panel
+     */
     @Override
     public void hideButtons() {
         Game.instance.remove(selectBoat1Button);
@@ -125,9 +138,13 @@ public class BoatSelectionState extends GameState {
     }
 
     @Override
-    public void update() {
-    }
+    public void update() {}
 
+    /**
+     * draws all the images for the selection state
+     * 
+     * @param g the graphics object to draw to
+     */
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, 0, 0, null);

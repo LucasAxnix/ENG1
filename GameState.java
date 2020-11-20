@@ -5,12 +5,15 @@ public abstract class GameState {
 
     protected ArrayList<GameEntity> gameEntities;
 
+    /**
+     * GameState contructor
+     */
     public GameState() {
         gameEntities = new ArrayList<GameEntity>();
         initImages();
         initButtons();
     }
-
+    
     public abstract void initButtons();
 
     public abstract void update();

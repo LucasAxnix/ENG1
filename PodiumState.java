@@ -5,7 +5,6 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class PodiumState extends GameState {
@@ -19,11 +18,17 @@ public class PodiumState extends GameState {
 
     private Boat[] boatPositions;
 
+    /**
+     * PodiumState constructor
+     */
     public PodiumState() {
         super();
         boatPositions = new Boat[3];
     }
 
+    /**
+     * initialises the buttons
+     */
     @Override
     public void initButtons() {
         mainMenuButton = new JButton(mainMenu);
@@ -38,11 +43,17 @@ public class PodiumState extends GameState {
 
     }
 
+    /**
+     * updates the poduim state
+     */
     @Override
     public void update() {
         increaseTime();
     }
 
+    /**
+     * draws all the content related to the podium state
+     */
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, 0, 0, null);
@@ -51,6 +62,9 @@ public class PodiumState extends GameState {
         g.drawImage(getBoatImage(boatPositions[2]), 700, 250 + (int) (Math.sin(time / Game.TICK_RATE / 2) * 10), null);
     }
 
+    /**
+     * initialises the images
+     */
     @Override
     public void initImages() {
         try {
@@ -67,18 +81,27 @@ public class PodiumState extends GameState {
 
     }
 
+    /**
+     * adds the buttons to the panel
+     */
     @Override
     public void showButtons() {
         Game.instance.add(mainMenuButton);
 
     }
 
+    /**
+     * removes the buttons from the panel
+     */
     @Override
     public void hideButtons() {
         Game.instance.remove(mainMenuButton);
 
     }
 
+    /**
+     * calculates the final positions of the boats
+     */
     public void finalPositions() {
         RaceState rs = (RaceState) GameStateManager.getInstance().getState(GameStateManager.RACESTATE);
         ArrayList<Boat> boats = rs.getBoats();
@@ -90,10 +113,19 @@ public class PodiumState extends GameState {
         }
     }
 
+    /**
+     * gets the boat image of the boat passed
+     * 
+     * @param boat the boat to get it's image
+     * @return the boat's image
+     */
     private BufferedImage getBoatImage(Boat boat) {
         return boatImages.get(boat.getName());
     }
 
+    /**
+     * increases the ticks that the player has been on the poduim state
+     */
     private void increaseTime() {
         time++;
     }

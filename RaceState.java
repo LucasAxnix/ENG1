@@ -19,31 +19,33 @@ public class RaceState extends GameState {
 
     private ArrayList<Boat> boats;
     private int playerBoatIndex;
-
+    /**
+     * RaceState constructor
+     */
     public RaceState() {
         super();
         nextRaceTimer = (int) (4 * Game.TICK_RATE);
         boats = new ArrayList<Boat>();
         instantiateRiver();
     }
-
+    /**
+     * instantiate river
+     */
     public void instantiateRiver() {
         river = new River(backgroundImage);
     }
-
+    /**
+     *  instantiate boats
+     * 
+     * @param boatType the type of boat the player selected
+     */
     public void instantiateBoats(BoatType boatType) {
         playerBoatIndex = boatType.ordinal();
         boats.clear();
-        /// ACTUAL BOATS
-        boats.add(new Boat(8, 4, 5, 10, boatImages.get(0), "Green")); // dur
-        boats.add(new Boat(9, 3, 8, 15, boatImages.get(1), "Red")); // man
-        boats.add(new Boat(7, 8, 9, 10, boatImages.get(2), "Lilac")); // acc
-        boats.add(new Boat(11, 3, 10, 10, boatImages.get(3), "Orange")); // speed
-        /// DEBUG BOATS
-        // boats.add(new Boat(10, 100, 0, 10, boatImages.get(0), "Green"));
-        // boats.add(new Boat(10, 100, 0, 10, boatImages.get(1), "Red"));
-        // boats.add(new Boat(10, 100, 0, 10, boatImages.get(2), "Lilac"));
-        // boats.add(new Boat(10, 100, 0, 10, boatImages.get(3), "Orange"));
+        boats.add(new Boat(8, 4, 5, 2, boatImages.get(0), "Green")); // dur
+        boats.add(new Boat(9, 3, 8, 3, boatImages.get(1), "Red")); // man
+        boats.add(new Boat(7, 8, 9, 2, boatImages.get(2), "Lilac")); // acc
+        boats.add(new Boat(11, 3, 10, 1, boatImages.get(3), "Orange")); // speed
 
         boats.get(playerBoatIndex).setPlayerBoat();
         boats.get((7 + playerBoatIndex) % 4).setOpponentBoat(1);
@@ -52,7 +54,11 @@ public class RaceState extends GameState {
 
         Game.instance.requestFocus();
     }
-
+    /**
+     * resets the boats
+     * 
+     * @param raceNumber the current race number
+     */
     public void resetBoats(int raceNumber) {
         for (Boat boat : boats) {
             boat.reset();
@@ -61,7 +67,9 @@ public class RaceState extends GameState {
         playerBoatFinished = false;
         nextRaceTimer = (int) (4 * Game.TICK_RATE);
     }
-
+    /**
+     * draws all the content related to the game state class
+     */
     @Override
     public void draw(Graphics g) {
         river.draw(g);
@@ -105,17 +113,17 @@ public class RaceState extends GameState {
     }
 
     @Override
-    public void hideButtons() {
-    }
+    public void hideButtons() {}
 
     @Override
-    public void initButtons() {
-    }
+    public void initButtons() {}
 
     @Override
-    public void showButtons() {
-    }
+    public void showButtons() {}
 
+    /**
+     * initialises the images
+     */
     @Override
     public void initImages() {
         try {
@@ -132,6 +140,9 @@ public class RaceState extends GameState {
         }
     }
 
+    /**
+     * updates everything in the race state
+     */
     @Override
     public void update() {
         river.update();
@@ -140,7 +151,7 @@ public class RaceState extends GameState {
         for (int i = 0; i < boats.size(); i++) {
             Boat b = boats.get(i);
             if (fl.collision(b)) {
-                b.finished();
+                b.setFinished();
                 sortTimes();
                 EndRaceState ers = (EndRaceState) GameStateManager.getInstance()
                         .getState(GameStateManager.ENDRACESTATE);
@@ -167,6 +178,11 @@ public class RaceState extends GameState {
         }
     }
 
+    /**
+     * gets the amount of boats that have finished
+     * 
+     * @return an integer of how many boats have finished the race
+     */
     private int getBoatsFinished() {
         int count = 0;
         for (Boat b : boats) {
@@ -180,22 +196,34 @@ public class RaceState extends GameState {
         return count;
     }
 
-    public boolean getPlayerFinished() {
-        return playerBoatFinished;
-    }
-
+    /**
+     * gets the river instance
+     * 
+     * @return the river instance
+     */
     public River getRiver() {
         return river;
     }
 
+    /**
+     * has the current race finished
+     * 
+     * @return a boolean of whether the race has finished
+     */
     private boolean isRaceFinished() {
         return getBoatsFinished() == 4;
     }
 
+    /**
+     * gets the array of boats
+     */
     public ArrayList<Boat> getBoats() {
         return boats;
     }
     
+    /**
+     * sorts the times of the boats
+     */
     private void sortTimes() {
         int pos = 4;
         for (Boat b1 : boats) {

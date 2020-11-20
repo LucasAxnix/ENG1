@@ -24,6 +24,11 @@ public class River extends GameEntity {
 			{ 520, 470, 420, 370, 320, 270, 10 }, { 75, 125, 175, 225, 275, 325, 580, 660 }, { 10 }, { 580 }, { 660 }, 
 			{ 10, 580 }, { 580, 660 }, { 660, 10 } };
 
+	/**
+	 * river constructor
+	 * 
+	 * @param background the image used for the river  
+	 */		
 	public River(BufferedImage background) {
 		super(0, 0, background);
 		try {
@@ -37,7 +42,11 @@ public class River extends GameEntity {
 		obstacles = new ArrayList<Obstacle>();
 		finishLine = new FinishLine(0, 0, finishLineImage);
 	}
-
+    /**
+	 * initiate race
+	 * 
+	 * @param raceNumber the number of race
+	 */
 	public void initRace(int raceNumber) {
 		this.raceNumber = raceNumber;
 		obstacles.clear();
@@ -65,7 +74,11 @@ public class River extends GameEntity {
 		rs.resetBoats(raceNumber);
 		finishLine = new FinishLine(raceLength + (raceLength / numberOfShapes), 0, finishLineImage);
 	}
-
+	/**
+	 * draws the content related to the river class
+	 * 
+	 * @param g the graphics object to draw to
+	 */
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(sprite, x, 0, null);
@@ -75,15 +88,25 @@ public class River extends GameEntity {
 			o.draw(g);
 		}
 	}
-
+	/**
+	 * sets the speed
+	 * 
+	 * @param speed the speed for the boat to be set to
+	 */
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
-
+	/**
+	 * gets the speed
+	 * 
+	 * @return the speed of the boat
+	 */
 	public float getSpeed() {
 		return this.speed;
 	}
-
+	/**
+	 * updates the river 
+	 */
 	@Override
 	public void update() {
 		if (!initialised) {
@@ -101,15 +124,27 @@ public class River extends GameEntity {
 		}
 		finishLine.x = playerX + finishLine.finishLinePositionX;
 	}
-
+	/**
+	 * gets obstacles
+	 * 
+	 * @return the obstacles to return
+	 */
 	public ArrayList<Obstacle> getObstacles() {
 		return obstacles;
 	}
-
+	/**
+	 * removes the obstacles
+	 * 
+	 * @param obstacle the obstacle to remove
+	 */
 	public void removeObstacle(Obstacle obstacle) {
 		obstacles.remove(obstacle);
 	}
-
+	/**
+	 * get the finish line
+	 * 
+	 * @return returns the finish line
+	 */
 	public FinishLine getFinishLine() {
 		return finishLine;
 	}

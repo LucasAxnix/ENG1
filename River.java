@@ -51,8 +51,8 @@ public class River extends GameEntity {
 		this.raceNumber = raceNumber;
 		obstacles.clear();
 		Random rd = new Random();
-		int raceLength = 10000;
-		int numberOfShapes = 10;
+		int raceLength = 40000;
+		int numberOfShapes = (raceNumber + 1) * 20;
 		playerX = 0;
 		speed = 0;
 		for (int x = 600; x < raceLength; x += raceLength / numberOfShapes) {

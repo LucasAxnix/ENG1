@@ -57,9 +57,9 @@ public class PodiumState extends GameState {
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, 0, 0, null);
-        g.drawImage(getBoatImage(boatPositions[0]), 500, 160 + (int) (Math.sin(time / Game.TICK_RATE / 2) * 10), null);
-        g.drawImage(getBoatImage(boatPositions[1]), 325, 240 + (int) (Math.sin(time / Game.TICK_RATE / 2) * 10), null);
-        g.drawImage(getBoatImage(boatPositions[2]), 700, 250 + (int) (Math.sin(time / Game.TICK_RATE / 2) * 10), null);
+        g.drawImage(getBoatImage(boatPositions[0]), 500, 160 + (int) (Math.sin(time / (Game.TICK_RATE * 2)) * 10), null);
+        g.drawImage(getBoatImage(boatPositions[1]), 325, 240 + (int) (Math.sin(time / (Game.TICK_RATE * 2)) * 10), null);
+        g.drawImage(getBoatImage(boatPositions[2]), 700, 250 + (int) (Math.sin(time / (Game.TICK_RATE * 2)) * 10), null);
     }
 
     /**

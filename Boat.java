@@ -67,6 +67,7 @@ public class Boat extends GameEntity {
 			maxSpeed *= 0.9f;
 			acceleration *= 0.9f;
 			maneuverability *= 0.9f;
+			maneuverability = (float)Math.ceil(maneuverability);
 		}
 	}
 

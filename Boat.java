@@ -6,7 +6,7 @@ public class Boat extends GameEntity {
 	private float maxSpeed;
 	private float acceleration;
 	private int durability;
-	private int maneuverability;
+	private float maneuverability;
 	private boolean isPlayer;
 	private int boatHealth;
 	private float speed;
@@ -30,7 +30,7 @@ public class Boat extends GameEntity {
 	 * @param sprite the image used to represent the boat
 	 * @param name the name of the boat used to display on the leaderboard
 	 */
-	public Boat(float maxSpeed, float acceleration, int durability, int maneuverability, BufferedImage sprite,
+	public Boat(float maxSpeed, float acceleration, int durability, float maneuverability, BufferedImage sprite,
 			String name) {
 		super(0, 0, sprite);
 		this.maxSpeed = maxSpeed;

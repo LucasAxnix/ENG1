@@ -42,10 +42,10 @@ public class RaceState extends GameState {
     public void instantiateBoats(BoatType boatType) {
         playerBoatIndex = boatType.ordinal();
         boats.clear();
-        boats.add(new Boat(8, 4, 5, 2, boatImages.get(0), "Green")); // dur
-        boats.add(new Boat(9, 3, 8, 3, boatImages.get(1), "Red")); // man
-        boats.add(new Boat(7, 8, 9, 2, boatImages.get(2), "Lilac")); // acc
-        boats.add(new Boat(11, 3, 10, 1, boatImages.get(3), "Orange")); // speed
+        boats.add(new Boat(8, 4, 5, 3, boatImages.get(0), "Green")); // dur
+        boats.add(new Boat(9, 3, 8, 4, boatImages.get(1), "Red")); // man
+        boats.add(new Boat(7, 8, 9, 3, boatImages.get(2), "Lilac")); // acc
+        boats.add(new Boat(11, 3, 10, 2, boatImages.get(3), "Orange")); // speed
 
         boats.get(playerBoatIndex).setPlayerBoat();
         boats.get((7 + playerBoatIndex) % 4).setOpponentBoat(1);

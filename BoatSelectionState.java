@@ -14,6 +14,11 @@ public class BoatSelectionState extends GameState {
     private BufferedImage lilacBoat;
     private BufferedImage orangeBoat;
     private BufferedImage title;
+    private BufferedImage instructions;
+    private BufferedImage stats1;
+    private BufferedImage stats2;
+    private BufferedImage stats3;
+    private BufferedImage stats4;
     private ImageIcon back;
     private ImageIcon selectBoat1;
     private ImageIcon selectBoat2;
@@ -37,6 +42,11 @@ public class BoatSelectionState extends GameState {
             lilacBoat = ImageIO.read(getClass().getResource("/Resources/redBoat.png"));
             orangeBoat = ImageIO.read(getClass().getResource("/Resources/orangeBoat.png"));
             title = ImageIO.read(getClass().getResource("/Resources/selectBoatTitle.png"));
+            instructions = ImageIO.read(getClass().getResource("/Resources/instructions.png"));
+            stats1 = ImageIO.read(getClass().getResource("/Resources/boat1Stats.png"));
+            stats2 = ImageIO.read(getClass().getResource("/Resources/boat2Stats.png"));
+            stats3 = ImageIO.read(getClass().getResource("/Resources/boat3Stats.png"));
+            stats4 = ImageIO.read(getClass().getResource("/Resources/boat4Stats.png"));
 
             back = new ImageIcon(getClass().getResource("/Resources/back.png"));
             selectBoat1 = new ImageIcon(getClass().getResource("/Resources/selectBoat1.png"));
@@ -63,7 +73,7 @@ public class BoatSelectionState extends GameState {
         });
 
         selectBoat1Button = new JButton(selectBoat1);
-        selectBoat1Button.setBounds(200, 200, 266, 50);
+        selectBoat1Button.setBounds(230, 210, 266, 50);
         selectBoat1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -73,7 +83,7 @@ public class BoatSelectionState extends GameState {
         });
 
         selectBoat2Button = new JButton(selectBoat2);
-        selectBoat2Button.setBounds(200, 300, 266, 50);
+        selectBoat2Button.setBounds(230, 310, 266, 50);
         selectBoat2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,7 +93,7 @@ public class BoatSelectionState extends GameState {
         });
 
         selectBoat3Button = new JButton(selectBoat3);
-        selectBoat3Button.setBounds(200, 400, 266, 50);
+        selectBoat3Button.setBounds(230, 410, 266, 50);
         selectBoat3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -93,7 +103,7 @@ public class BoatSelectionState extends GameState {
         });
 
         selectBoat4Button = new JButton(selectBoat4);
-        selectBoat4Button.setBounds(200, 500, 266, 50);
+        selectBoat4Button.setBounds(230, 510, 266, 50);
         selectBoat4Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -148,10 +158,15 @@ public class BoatSelectionState extends GameState {
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, 0, 0, null);
-        g.drawImage(greenBoat, 30, 200, null);
-        g.drawImage(redBoat, 30, 400, null);
-        g.drawImage(lilacBoat, 30, 300, null);
-        g.drawImage(orangeBoat, 30, 500, null);
+        g.drawImage(greenBoat, 50, 200, null);
+        g.drawImage(redBoat, 50, 400, null);
+        g.drawImage(lilacBoat, 50, 300, null);
+        g.drawImage(orangeBoat, 50, 500, null);
         g.drawImage(title, 290, 50, null);
+        g.drawImage(instructions, 390, 620, null);
+        g.drawImage(stats1, 600, 190, null);
+        g.drawImage(stats2, 600, 290, null);
+        g.drawImage(stats3, 600, 390, null);
+        g.drawImage(stats4, 600, 490, null);
     }
 }

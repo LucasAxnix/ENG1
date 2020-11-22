@@ -69,12 +69,12 @@ public class PodiumState extends GameState {
     public void initImages() {
         try {
             boatImages = new HashMap<String, BufferedImage>();
-            background = ImageIO.read(getClass().getResource("/Resources/podiumScreen.png"));
-            boatImages.put("Lilac", ImageIO.read(getClass().getResource("/Resources/lilacBoatVertical.png")));
-            boatImages.put("Red", ImageIO.read(getClass().getResource("/Resources/redBoatVertical.png")));
-            boatImages.put("Green", ImageIO.read(getClass().getResource("/Resources/greenBoatVertical.png")));
-            boatImages.put("Orange", ImageIO.read(getClass().getResource("/Resources/orangeBoatVertical.png")));
-            mainMenu = new ImageIcon(getClass().getResource("/Resources/mainMenu.png"));
+            background = ImageIO.read(getClass().getResourceAsStream("Resources/podiumScreen.png"));
+            boatImages.put("Lilac", ImageIO.read(getClass().getResourceAsStream("Resources/lilacBoatVertical.png")));
+            boatImages.put("Red", ImageIO.read(getClass().getResourceAsStream("Resources/redBoatVertical.png")));
+            boatImages.put("Green", ImageIO.read(getClass().getResourceAsStream("Resources/greenBoatVertical.png")));
+            boatImages.put("Orange", ImageIO.read(getClass().getResourceAsStream("Resources/orangeBoatVertical.png")));
+            mainMenu = new ImageIcon(getClass().getResource("Resources/mainMenu.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }

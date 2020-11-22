@@ -129,12 +129,12 @@ public class RaceState extends GameState {
         try {
             // Load boat images and store them in boat images list
             boatImages = new ArrayList<BufferedImage>();
-            boatImages.add(ImageIO.read(getClass().getResource("/Resources/greenBoat.png")));
-            boatImages.add(ImageIO.read(getClass().getResource("/Resources/redBoat.png")));
-            boatImages.add(ImageIO.read(getClass().getResource("/Resources/lilacBoat.png")));
-            boatImages.add(ImageIO.read(getClass().getResource("/Resources/orangeBoat.png")));
-            backgroundImage = ImageIO.read(getClass().getResource("/Resources/RaceBackground2160.png"));
-            leaderboardImage = ImageIO.read(getClass().getResource("/Resources/leaderboard.png"));
+            boatImages.add(ImageIO.read(getClass().getResourceAsStream("Resources/greenBoat.png")));
+            boatImages.add(ImageIO.read(getClass().getResourceAsStream("Resources/redBoat.png")));
+            boatImages.add(ImageIO.read(getClass().getResourceAsStream("Resources/lilacBoat.png")));
+            boatImages.add(ImageIO.read(getClass().getResourceAsStream("Resources/orangeBoat.png")));
+            backgroundImage = ImageIO.read(getClass().getResourceAsStream("Resources/RaceBackground2160.png"));
+            leaderboardImage = ImageIO.read(getClass().getResourceAsStream("Resources/leaderboard.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }

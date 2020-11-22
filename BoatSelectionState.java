@@ -36,23 +36,23 @@ public class BoatSelectionState extends GameState {
     @Override
     public void initImages() {
         try {
-            background = ImageIO.read(getClass().getResource("/Resources/blue.png"));
-            greenBoat = ImageIO.read(getClass().getResource("/Resources/greenBoat.png"));
-            redBoat = ImageIO.read(getClass().getResource("/Resources/lilacBoat.png"));
-            lilacBoat = ImageIO.read(getClass().getResource("/Resources/redBoat.png"));
-            orangeBoat = ImageIO.read(getClass().getResource("/Resources/orangeBoat.png"));
-            title = ImageIO.read(getClass().getResource("/Resources/selectBoatTitle.png"));
-            instructions = ImageIO.read(getClass().getResource("/Resources/instructions.png"));
-            stats1 = ImageIO.read(getClass().getResource("/Resources/boat1Stats.png"));
-            stats2 = ImageIO.read(getClass().getResource("/Resources/boat2Stats.png"));
-            stats3 = ImageIO.read(getClass().getResource("/Resources/boat3Stats.png"));
-            stats4 = ImageIO.read(getClass().getResource("/Resources/boat4Stats.png"));
+            background = ImageIO.read(getClass().getResourceAsStream("Resources/blue.png"));
+            greenBoat = ImageIO.read(getClass().getResourceAsStream("Resources/greenBoat.png"));
+            redBoat = ImageIO.read(getClass().getResourceAsStream("Resources/lilacBoat.png"));
+            lilacBoat = ImageIO.read(getClass().getResourceAsStream("Resources/redBoat.png"));
+            orangeBoat = ImageIO.read(getClass().getResourceAsStream("Resources/orangeBoat.png"));
+            title = ImageIO.read(getClass().getResourceAsStream("Resources/selectBoatTitle.png"));
+            instructions = ImageIO.read(getClass().getResourceAsStream("Resources/instructions.png"));
+            stats1 = ImageIO.read(getClass().getResourceAsStream("Resources/boat1Stats.png"));
+            stats2 = ImageIO.read(getClass().getResourceAsStream("Resources/boat2Stats.png"));
+            stats3 = ImageIO.read(getClass().getResourceAsStream("Resources/boat3Stats.png"));
+            stats4 = ImageIO.read(getClass().getResourceAsStream("Resources/boat4Stats.png"));
 
-            back = new ImageIcon(getClass().getResource("/Resources/back.png"));
-            selectBoat1 = new ImageIcon(getClass().getResource("/Resources/selectBoat1.png"));
-            selectBoat2 = new ImageIcon(getClass().getResource("/Resources/selectBoat2.png"));
-            selectBoat3 = new ImageIcon(getClass().getResource("/Resources/selectBoat3.png"));
-            selectBoat4 = new ImageIcon(getClass().getResource("/Resources/selectBoat4.png"));
+            back = new ImageIcon(getClass().getResource("Resources/back.png"));
+            selectBoat1 = new ImageIcon(getClass().getResource("Resources/selectBoat1.png"));
+            selectBoat2 = new ImageIcon(getClass().getResource("Resources/selectBoat2.png"));
+            selectBoat3 = new ImageIcon(getClass().getResource("Resources/selectBoat3.png"));
+            selectBoat4 = new ImageIcon(getClass().getResource("Resources/selectBoat4.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }

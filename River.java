@@ -32,10 +32,10 @@ public class River extends GameEntity {
 	public River(BufferedImage background) {
 		super(0, 0, background);
 		try {
-			duck = ImageIO.read(getClass().getResource("/Resources/duck.png"));
-			log = ImageIO.read(getClass().getResource("/Resources/log.png"));
-			rock = ImageIO.read(getClass().getResource("/Resources/rock.png"));
-			finishLineImage = ImageIO.read(getClass().getResource("/Resources/finishLine.png"));
+			duck = ImageIO.read(getClass().getResourceAsStream("Resources/duck.png"));
+			log = ImageIO.read(getClass().getResourceAsStream("Resources/log.png"));
+			rock = ImageIO.read(getClass().getResourceAsStream("Resources/rock.png"));
+			finishLineImage = ImageIO.read(getClass().getResourceAsStream("Resources/finishLine.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

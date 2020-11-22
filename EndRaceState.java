@@ -39,12 +39,12 @@ public class EndRaceState extends GameState {
     public void initImages() {
         tables = new BufferedImage[4];
         try {
-            background = ImageIO.read(getClass().getResource("/Resources/blue.png"));
-            tables[0] = ImageIO.read(getClass().getResource("/Resources/greenTable.png"));
-            tables[1] = ImageIO.read(getClass().getResource("/Resources/redTable.png"));
-            tables[2] = ImageIO.read(getClass().getResource("/Resources/lilacTable.png"));
-            tables[3] = ImageIO.read(getClass().getResource("/Resources/orangeTable.png"));
-            startNewRace = new ImageIcon(getClass().getResource("/Resources/startNextRaceButton.png"));
+            background = ImageIO.read(getClass().getResourceAsStream("Resources/blueEndRace.png"));
+            tables[0] = ImageIO.read(getClass().getResourceAsStream("Resources/greenTable.png"));
+            tables[1] = ImageIO.read(getClass().getResourceAsStream("Resources/redTable.png"));
+            tables[2] = ImageIO.read(getClass().getResourceAsStream("Resources/lilacTable.png"));
+            tables[3] = ImageIO.read(getClass().getResourceAsStream("Resources/orangeTable.png"));
+            startNewRace = new ImageIcon(getClass().getResource("Resources/startNextRaceButton.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }

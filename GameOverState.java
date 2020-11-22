@@ -33,8 +33,8 @@ public class GameOverState extends GameState {
     @Override
     public void initImages() {
         try {
-            background = ImageIO.read(getClass().getResource("/Resources/blue.png"));
-            restart = new ImageIcon(getClass().getResource("/Resources/restart.png"));
+            background = ImageIO.read(getClass().getResourceAsStream("Resources/blue.png"));
+            restart = new ImageIcon(getClass().getResource("Resources/restart.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
